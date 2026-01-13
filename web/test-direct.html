@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>直接测试 - 每日推算卡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 16px 24px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-info {
+            font-size: 14px;
+            color: #fff;
+        }
+
+        #phoneMasked {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .btn-text {
+            background: transparent;
+            border: 1px solid rgba(255,255,255, 0.5);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-text:hover {
+            background: rgba(255,255,255, 0.1);
+        }
+
+        .debug-panel {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .debug-log {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .debug-log p {
+            margin: 3px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- 完全复制 index.html 的 header 结构 -->
+    <div class="header">
+        <div class="header-left">
+            <h1 class="logo">🔮 每日推算卡</h1>
+        </div>
+        <div class="header-right">
+            <span class="user-info">📱 <span id="phoneMasked">未登录</span></span>
+            <button class="btn-text" id="profileBtn">👤 资料设置</button>
+            <button class="btn-text" id="logoutBtn">退出</button>
+        </div>
+    </div>
+
+    <!-- 调试面板 -->
+    <div class="debug-panel">
+        <h2>调试面板</h2>
+        <p>点击上方按钮，观察日志输出：</p>
+        <div class="debug-log" id="debugLog"></div>
+    </div>
+
+    <!-- 直接添加 JavaScript（不使用外部文件） -->
+    <script>
+        console.log('=== 脚本开始执行 ===');
+
+        // 添加日志
+        function addLog(message) {
+            const log = document.getElementById('debugLog');
+            const p = document.createElement('p');
+            const time = new Date().toLocaleTimeString();
+            p.textContent = `[${time}] ${message}`;
+            log.appendChild(p);
+            log.scrollTop = log.scrollHeight;
+            console.log(message);
+        }
+
+        // 方法1：直接添加 onclick 属性
+        addLog('方法1：直接添加 onclick 属性...');
+
+        const profileBtn = document.getElementById('profileBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        if (profileBtn) {
+            profileBtn.onclick = function() {
+                addLog('✓ profileBtn onclick 被触发！');
+                alert('✓ profileBtn onclick 工作正常！');
+            };
+            addLog('✓ profileBtn.onclick 已设置');
+        } else {
+            addLog('✗ profileBtn 不存在！');
+        }
+
+        if (logoutBtn) {
+            logoutBtn.onclick = function() {
+                addLog('✓ logoutBtn onclick 被触发！');
+                alert('✓ logoutBtn onclick 工作正常！');
+            };
+            addLog('✓ logoutBtn.onclick 已设置');
+        } else {
+            addLog('✗ logoutBtn 不存在！');
+        }
+
+        // 方法2：使用 addEventListener
+        addLog('方法2：使用 addEventListener...');
+
+        profileBtn.addEventListener('click', function() {
+            addLog('✓ profileBtn addEventListener 被触发！');
+            console.log('profileBtn addEventListener 被触发！');
+        });
+        addLog('✓ profileBtn addEventListener 已添加');
+
+        logoutBtn.addEventListener('click', function() {
+            addLog('✓ logoutBtn addEventListener 被触发！');
+            console.log('logoutBtn addEventListener 被触发！');
+        });
+        addLog('✓ logoutBtn addEventListener 已添加');
+
+        // 检查元素状态
+        addLog('=== 元素状态检查 ===');
+        addLog(`profileBtn 存在: ${!!profileBtn}`);
+        addLog(`logoutBtn 存在: ${!!logoutBtn}`);
+
+        if (profileBtn) {
+            addLog(`profileBtn.tagName: ${profileBtn.tagName}`);
+            addLog(`profileBtn.disabled: ${profileBtn.disabled}`);
+            addLog(`profileBtn.style.pointerEvents: ${getComputedStyle(profileBtn).pointerEvents}`);
+            addLog(`profileBtn.style.display: ${getComputedStyle(profileBtn).display}`);
+            addLog(`profileBtn.style.visibility: ${getComputedStyle(profileBtn).visibility}`);
+            addLog(`profileBtn.style.zIndex: ${getComputedStyle(profileBtn).zIndex}`);
+        }
+
+        if (logoutBtn) {
+            addLog(`logoutBtn.tagName: ${logoutBtn.tagName}`);
+            addLog(`logoutBtn.disabled: ${logoutBtn.disabled}`);
+            addLog(`logoutBtn.style.pointerEvents: ${getComputedStyle(logoutBtn).pointerEvents}`);
+            addLog(`logoutBtn.style.display: ${getComputedStyle(logoutBtn).display}`);
+            addLog(`logoutBtn.style.visibility: ${getComputedStyle(logoutBtn).visibility}`);
+        }
+
+        addLog('=== 脚本初始化完成 ===');
+    </script>
+</body>
+</html>

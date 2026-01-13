@@ -1,0 +1,578 @@
+[
+  {
+    "_id": 0,
+    "name": "乾为天",
+    "symbol": "䷀",
+    "meaning": "元亨利贞",
+    "lines": "111111",
+    "interpretation": "天行健，君子以自强不息。象征刚健、进取、领导力强。",
+    "advice": "保持进取心，勇敢向前，适合开始新项目。"
+  },
+  {
+    "_id": 1,
+    "name": "坤为地",
+    "symbol": "䷁",
+    "meaning": "厚德载物",
+    "lines": "000000",
+    "interpretation": "地势坤，君子以厚德载物。象征包容、承载、柔顺。",
+    "advice": "保持耐心，以柔克刚，注重合作。"
+  },
+  {
+    "_id": 2,
+    "name": "水雷屯",
+    "symbol": "䷂",
+    "meaning": "万事起头难",
+    "lines": "100010",
+    "interpretation": "屯，刚柔始交而难生。象征开始阶段的困难。",
+    "advice": "万事起头难，保持冷静，按部就班处理事务。"
+  },
+  {
+    "_id": 3,
+    "name": "山水蒙",
+    "symbol": "䷃",
+    "meaning": "蒙以养正",
+    "lines": "010001",
+    "interpretation": "山下出泉，蒙。象征初学者的状态。",
+    "advice": "保持学习的态度，不要急于求成。"
+  },
+  {
+    "_id": 4,
+    "name": "水天需",
+    "symbol": "䷄",
+    "meaning": "等待时机",
+    "lines": "111010",
+    "interpretation": "需，须也。象征等待时机。",
+    "advice": "等待时机，保持耐心，等待最佳时机行动。"
+  },
+  {
+    "_id": 5,
+    "name": "天水讼",
+    "symbol": "䷅",
+    "meaning": "讼不可长",
+    "lines": "010111",
+    "interpretation": "讼，有孚窒。象征争执和冲突。",
+    "advice": "避免冲突，寻求和解与合作。"
+  },
+  {
+    "_id": 6,
+    "name": "地水师",
+    "symbol": "䷆",
+    "meaning": "师出以律",
+    "lines": "010000",
+    "interpretation": "地中有水，师。象征团队和组织。",
+    "advice": "统一目标，团结协作，以德服人。"
+  },
+  {
+    "_id": 7,
+    "name": "水地比",
+    "symbol": "䷇",
+    "meaning": "亲密无间",
+    "lines": "000010",
+    "interpretation": "地上有水，比。象征亲密关系。",
+    "advice": "加强沟通，建立信任关系。"
+  },
+  {
+    "_id": 8,
+    "name": "风天小畜",
+    "symbol": "䷈",
+    "meaning": "积蓄力量",
+    "lines": "111011",
+    "interpretation": "风行天上，小畜。象征积蓄。",
+    "advice": "保持谦逊，稳步前进。"
+  },
+  {
+    "_id": 9,
+    "name": "天泽履",
+    "symbol": "䷉",
+    "meaning": "履行承诺",
+    "lines": "110111",
+    "interpretation": "上天下泽，履。象征实践和履行。",
+    "advice": "诚实守信，言行一致。"
+  },
+  {
+    "_id": 10,
+    "name": "地天泰",
+    "symbol": "䷊",
+    "meaning": "泰然处之",
+    "lines": "111000",
+    "interpretation": "天地交，泰。象征通顺和谐。",
+    "advice": "保持乐观，顺应时势。"
+  },
+  {
+    "_id": 11,
+    "name": "天地否",
+    "symbol": "䷋",
+    "meaning": "否极泰来",
+    "lines": "000111",
+    "interpretation": "天地不交，否。象征困难和闭塞。",
+    "advice": "保持信念，等待转机。"
+  },
+  {
+    "_id": 12,
+    "name": "天火同人",
+    "symbol": "䷌",
+    "meaning": "齐心协力",
+    "lines": "101111",
+    "interpretation": "天与火，同人。象征团结合作。",
+    "advice": "团结一致，共同努力。"
+  },
+  {
+    "_id": 13,
+    "name": "火天大有",
+    "symbol": "䷍",
+    "meaning": "大有作为",
+    "lines": "111101",
+    "interpretation": "火在天上，大有。象征丰盛和成就。",
+    "advice": "把握机遇，展示才华。"
+  },
+  {
+    "_id": 14,
+    "name": "地山谦",
+    "symbol": "䷎",
+    "meaning": "谦谦君子",
+    "lines": "001000",
+    "interpretation": "地中有山，谦。象征谦逊。",
+    "advice": "保持谦逊，虚心学习。"
+  },
+  {
+    "_id": 15,
+    "name": "雷地豫",
+    "symbol": "䷏",
+    "meaning": "乐天知命",
+    "lines": "000100",
+    "interpretation": "雷出地奋，豫。象征喜悦和准备。",
+    "advice": "保持乐观，享受生活。"
+  },
+  {
+    "_id": 16,
+    "name": "泽雷随",
+    "symbol": "䷐",
+    "meaning": "顺其自然",
+    "lines": "100110",
+    "interpretation": "泽中有雷，随。象征跟随和顺应。",
+    "advice": "保持灵活，随遇而安。"
+  },
+  {
+    "_id": 17,
+    "name": "山风蛊",
+    "symbol": "䷑",
+    "meaning": "整顿秩序",
+    "lines": "011001",
+    "interpretation": "山下有风，蛊。象征整顿和改革。",
+    "advice": "发现问题，及时纠正。"
+  },
+  {
+    "_id": 18,
+    "name": "地泽临",
+    "symbol": "䷒",
+    "meaning": "渐入佳境",
+    "lines": "110000",
+    "interpretation": "地上有泽，临。象征接近和来临。",
+    "advice": "稳步前进，越来越好。"
+  },
+  {
+    "_id": 19,
+    "name": "风地观",
+    "symbol": "䷓",
+    "meaning": "观察思考",
+    "lines": "000011",
+    "interpretation": "风行地上，观。象征观察和思考。",
+    "advice": "保持冷静，多观察多思考。"
+  },
+  {
+    "_id": 20,
+    "name": "火雷噬嗑",
+    "symbol": "䷔",
+    "meaning": "惩前毖后",
+    "lines": "100101",
+    "interpretation": "雷电噬嗑。象征执行和纠正。",
+    "advice": "接受教训，改进方法。"
+  },
+  {
+    "_id": 21,
+    "name": "山火贲",
+    "symbol": "䷕",
+    "meaning": "光彩照人",
+    "lines": "101001",
+    "interpretation": "山下有火，贲。象征装饰和美化。",
+    "advice": "展现才华，追求美好。"
+  },
+  {
+    "_id": 22,
+    "name": "山地剥",
+    "symbol": "䷖",
+    "meaning": "顺势而为",
+    "lines": "000001",
+    "interpretation": "山附于地，剥。象征剥离和衰落。",
+    "advice": "顺应时势，避免强求。"
+  },
+  {
+    "_id": 23,
+    "name": "地雷复",
+    "symbol": "䷗",
+    "meaning": "否极泰来",
+    "lines": "100000",
+    "interpretation": "雷在地中，复。象征回归和复兴。",
+    "advice": "困难只是暂时的，继续保持。"
+  },
+  {
+    "_id": 24,
+    "name": "天雷无妄",
+    "symbol": "䷘",
+    "meaning": "光明正大",
+    "lines": "100111",
+    "interpretation": "天下雷行，无妄。象征正直和真实。",
+    "advice": "保持正直，坚持原则。"
+  },
+  {
+    "_id": 25,
+    "name": "山天大畜",
+    "symbol": "䷙",
+    "meaning": "大畜德性",
+    "lines": "111001",
+    "interpretation": "天在山中，大畜。象征积蓄和培养。",
+    "advice": "积累品德，提升自己。"
+  },
+  {
+    "_id": 26,
+    "name": "山雷颐",
+    "symbol": "䷚",
+    "meaning": "颐养身心",
+    "lines": "100001",
+    "interpretation": "山下有雷，颐。象征养育和修养。",
+    "advice": "注意健康，保持平衡。"
+  },
+  {
+    "_id": 27,
+    "name": "泽风大过",
+    "symbol": "䷛",
+    "meaning": "非常时期",
+    "lines": "011110",
+    "interpretation": "泽灭木，大过。象征过度和危机。",
+    "advice": "勇敢面对，化危为机。"
+  },
+  {
+    "_id": 28,
+    "name": "坎为水",
+    "symbol": "䷜",
+    "meaning": "刚柔并济",
+    "lines": "010010",
+    "interpretation": "水洊至，坎。象征险陷和困难。",
+    "advice": "保持平衡，不要偏激。"
+  },
+  {
+    "_id": 29,
+    "name": "离为火",
+    "symbol": "䷝",
+    "meaning": "依附柔顺",
+    "lines": "101101",
+    "interpretation": "明两作，离。象征光明和依附。",
+    "advice": "保持真诚，相互依存。"
+  },
+  {
+    "_id": 30,
+    "name": "泽山咸",
+    "symbol": "䷞",
+    "meaning": "互相感应",
+    "lines": "001110",
+    "interpretation": "山上有泽，咸。象征感应和交流。",
+    "advice": "建立默契，增进感情。"
+  },
+  {
+    "_id": 31,
+    "name": "雷风恒",
+    "symbol": "䷟",
+    "meaning": "持之以恒",
+    "lines": "011100",
+    "interpretation": "雷风，恒。象征持久和恒心。",
+    "advice": "保持毅力，长期坚持。"
+  },
+  {
+    "_id": 32,
+    "name": "天山遁",
+    "symbol": "䷠",
+    "meaning": "明哲保身",
+    "lines": "001111",
+    "interpretation": "天下有山，遁。象征退隐和避开。",
+    "advice": "保持清醒，避免风险。"
+  },
+  {
+    "_id": 33,
+    "name": "雷天大壮",
+    "symbol": "䷡",
+    "meaning": "锐意进取",
+    "lines": "111100",
+    "interpretation": "雷在天上，大壮。象征壮大和进取。",
+    "advice": "抓住机会，奋勇向前。"
+  },
+  {
+    "_id": 34,
+    "name": "火地晋",
+    "symbol": "䷢",
+    "meaning": "光明显现",
+    "lines": "000101",
+    "interpretation": "明出地上，晋。象征前进和晋升。",
+    "advice": "展现光芒，照亮前路。"
+  },
+  {
+    "_id": 35,
+    "name": "地火明夷",
+    "symbol": "䷣",
+    "meaning": "韬光养晦",
+    "lines": "101000",
+    "interpretation": "明入地中，明夷。象征隐藏和隐退。",
+    "advice": "保持低调，等待时机。"
+  },
+  {
+    "_id": 36,
+    "name": "风火家人",
+    "symbol": "䷤",
+    "meaning": "家庭和谐",
+    "lines": "101011",
+    "interpretation": "风自火出，家人。象征家庭和组织。",
+    "advice": "珍惜家庭，注重关系。"
+  },
+  {
+    "_id": 37,
+    "name": "火泽睽",
+    "symbol": "䷥",
+    "meaning": "和而不同",
+    "lines": "110101",
+    "interpretation": "火动上，泽动下，睽。象征分歧。",
+    "advice": "尊重差异，求同存异。"
+  },
+  {
+    "_id": 38,
+    "name": "水山蹇",
+    "symbol": "䷦",
+    "meaning": "艰难险阻",
+    "lines": "001010",
+    "interpretation": "山上有水，蹇。象征困难和险阻。",
+    "advice": "克服困难，继续前进。"
+  },
+  {
+    "_id": 39,
+    "name": "雷水解",
+    "symbol": "䷧",
+    "meaning": "化险为夷",
+    "lines": "010100",
+    "interpretation": "雷雨作，解。象征解脱和解决。",
+    "advice": "勇敢面对，转危为安。"
+  },
+  {
+    "_id": 40,
+    "name": "山泽损",
+    "symbol": "䷨",
+    "meaning": "损益平衡",
+    "lines": "110001",
+    "interpretation": "山下有泽，损。象征减少和损失。",
+    "advice": "有所取舍，保持平衡。"
+  },
+  {
+    "_id": 41,
+    "name": "风雷益",
+    "symbol": "䷩",
+    "meaning": "积极进取",
+    "lines": "001011",
+    "interpretation": "风雷，益。象征增加和益处。",
+    "advice": "把握机会，努力向前。"
+  },
+  {
+    "_id": 42,
+    "name": "泽天夬",
+    "symbol": "䷪",
+    "meaning": "决断有力",
+    "lines": "111110",
+    "interpretation": "泽上于天，夬。象征决断和突破。",
+    "advice": "果断行动，抓住机会。"
+  },
+  {
+    "_id": 43,
+    "name": "天风姤",
+    "symbol": "䷫",
+    "meaning": "相遇良机",
+    "lines": "011111",
+    "interpretation": "天下有风，姤。象征相遇和意外。",
+    "advice": "珍惜机会，把握当下。"
+  },
+  {
+    "_id": 44,
+    "name": "泽地萃",
+    "symbol": "䷬",
+    "meaning": "聚集力量",
+    "lines": "000110",
+    "interpretation": "泽上于地，萃。象征聚集和汇聚。",
+    "advice": "团结合作，共同前进。"
+  },
+  {
+    "_id": 45,
+    "name": "地风升",
+    "symbol": "䷭",
+    "meaning": "稳步上升",
+    "lines": "011000",
+    "interpretation": "地中生木，升。象征上升和提升。",
+    "advice": "脚踏实地，步步为营。"
+  },
+  {
+    "_id": 46,
+    "name": "泽水困",
+    "symbol": "䷮",
+    "meaning": "坚守原则",
+    "lines": "010110",
+    "interpretation": "泽无水，困。象征困境和限制。",
+    "advice": "保持初心，不放弃。"
+  },
+  {
+    "_id": 47,
+    "name": "水风井",
+    "symbol": "䷯",
+    "meaning": "井然有序",
+    "lines": "011010",
+    "interpretation": "木上有水，井。象征源泉和滋养。",
+    "advice": "不断学习，提升自己。"
+  },
+  {
+    "_id": 48,
+    "name": "泽火革",
+    "symbol": "䷰",
+    "meaning": "革新求变",
+    "lines": "101110",
+    "interpretation": "泽中有火，革。象征变革和更新。",
+    "advice": "勇于创新，突破常规。"
+  },
+  {
+    "_id": 49,
+    "name": "火风鼎",
+    "symbol": "䷱",
+    "meaning": "革故鼎新",
+    "lines": "011101",
+    "interpretation": "木上有火，鼎。象征建立和稳定。",
+    "advice": "除旧布新，开创未来。"
+  },
+  {
+    "_id": 50,
+    "name": "震为雷",
+    "symbol": "䷲",
+    "meaning": "雷厉风行",
+    "lines": "100100",
+    "interpretation": "震惊百里。象征震动和行动。",
+    "advice": "迅速行动，果断有力。"
+  },
+  {
+    "_id": 51,
+    "name": "艮为山",
+    "symbol": "䷳",
+    "meaning": "稳如泰山",
+    "lines": "001001",
+    "interpretation": "兼山，艮。象征停止和静止。",
+    "advice": "保持稳定，沉着冷静。"
+  },
+  {
+    "_id": 52,
+    "name": "风山渐",
+    "symbol": "䷴",
+    "meaning": "循序渐进",
+    "lines": "001011",
+    "interpretation": "山上有木，渐。象征渐进。",
+    "advice": "稳步前进，不急不躁。"
+  },
+  {
+    "_id": 53,
+    "name": "雷泽归妹",
+    "symbol": "䷵",
+    "meaning": "欢喜快乐",
+    "lines": "110100",
+    "interpretation": "泽上有雷，归妹。象征归位和喜悦。",
+    "advice": "保持快乐，享受生活。"
+  },
+  {
+    "_id": 54,
+    "name": "雷火丰",
+    "symbol": "䷶",
+    "meaning": "丰功伟绩",
+    "lines": "101100",
+    "interpretation": "雷电皆至，丰。象征丰盛和成就。",
+    "advice": "取得成就，展现价值。"
+  },
+  {
+    "_id": 55,
+    "name": "火山旅",
+    "symbol": "䷷",
+    "meaning": "旅途通达",
+    "lines": "001101",
+    "interpretation": "山上有火，旅。象征旅行和客居。",
+    "advice": "顺利前进，一路畅通。"
+  },
+  {
+    "_id": 56,
+    "name": "巽为风",
+    "symbol": "䷸",
+    "meaning": "风行水上",
+    "lines": "011011",
+    "interpretation": "随风，巽。象征顺从和渗透。",
+    "advice": "保持灵活，顺势而为。"
+  },
+  {
+    "_id": 57,
+    "name": "兑为泽",
+    "symbol": "䷹",
+    "meaning": "喜悦满怀",
+    "lines": "110110",
+    "interpretation": "丽泽，兑。象征喜悦和交流。",
+    "advice": "保持心情，享受生活。"
+  },
+  {
+    "_id": 58,
+    "name": "风水涣",
+    "symbol": "䷺",
+    "meaning": "涣然冰释",
+    "lines": "010011",
+    "interpretation": "风行水上，涣。象征化解和离散。",
+    "advice": "消除隔阂，增进理解。"
+  },
+  {
+    "_id": 59,
+    "name": "水泽节",
+    "symbol": "䷻",
+    "meaning": "节制有度",
+    "lines": "110010",
+    "interpretation": "泽上有水，节。象征节制和限制。",
+    "advice": "保持平衡，不要过度。"
+  },
+  {
+    "_id": 60,
+    "name": "风泽中孚",
+    "symbol": "䷼",
+    "meaning": "诚信为本",
+    "lines": "110111",
+    "interpretation": "泽上有风，中孚。象征诚信。",
+    "advice": "保持诚信，建立信任。"
+  },
+  {
+    "_id": 61,
+    "name": "雷山小过",
+    "symbol": "䷽",
+    "meaning": "小过无伤",
+    "lines": "001100",
+    "interpretation": "山上有雷，小过。象征小过失。",
+    "advice": "小问题不影响大局。"
+  },
+  {
+    "_id": 62,
+    "name": "水火既济",
+    "symbol": "䷾",
+    "meaning": "水火既济",
+    "lines": "101010",
+    "interpretation": "水在火上，既济。象征完成和圆满。",
+    "advice": "事业有成，圆满完成。"
+  },
+  {
+    "_id": 63,
+    "name": "火水未济",
+    "symbol": "䷿",
+    "meaning": "未济之时",
+    "lines": "010101",
+    "interpretation": "火在水上，未济。象征未完成。",
+    "advice": "继续努力，追求完美。"
+  }
+]

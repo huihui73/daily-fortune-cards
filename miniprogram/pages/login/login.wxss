@@ -1,0 +1,247 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+/* 状态区域 */
+.status-section {
+  margin: 20px 0;
+}
+
+.status-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.status-card.success {
+  border-left: 4px solid #52c41a;
+}
+
+.status-card.pending {
+  border-left: 4px solid #faad14;
+}
+
+.status-icon {
+  font-size: 40px;
+}
+
+.status-text {
+  flex: 1;
+}
+
+.status-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.status-desc {
+  font-size: 14px;
+  color: #666;
+}
+
+/* 已登录区域 */
+.logged-in-section {
+  margin: 20px 0;
+}
+
+.user-info {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.user-icon {
+  font-size: 48px;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-phone {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.user-status {
+  font-size: 14px;
+  color: #52c41a;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+/* 登录区域 */
+.login-section {
+  margin: 20px 0;
+}
+
+.info-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.info-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.info-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.info-content {
+  text-align: left;
+}
+
+.info-item {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.info-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  background: #667eea;
+  border-radius: 50%;
+}
+
+.privacy-notice {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.privacy-icon {
+  font-size: 20px;
+}
+
+.privacy-text {
+  flex: 1;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+.login-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 功能介绍 */
+.features-section {
+  margin: 40px 0;
+  padding-bottom: 40px;
+}
+
+.section-title {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.feature-item {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.feature-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.feature-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 按钮样式 */
+.btn {
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 500;
+  height: 48px;
+  line-height: 46px;
+  border: none;
+  transition: all 0.3s;
+}
+
+.btn::after {
+  border: none;
+}
+
+.btn-primary {
+  background: #fff;
+  color: #667eea;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.btn-large {
+  font-size: 16px;
+  font-weight: 600;
+  height: 52px;
+  line-height: 50px;
+}

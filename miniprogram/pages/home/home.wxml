@@ -1,0 +1,133 @@
+<view class="container">
+  <!-- 登录引导 -->
+  <view class="auth-guide" wx:if="{{showLoginGuide}}">
+    <view class="guide-card">
+      <view class="guide-icon">🔒</view>
+      <view class="guide-title">需要登录</view>
+      <view class="guide-desc">请授权手机号以使用完整功能</view>
+
+      <button
+        class="btn btn-primary btn-large"
+        open-type="getPhoneNumber"
+        bindgetphonenumber="onGetPhoneNumber">
+        使用微信手机号登录
+      </button>
+
+      <view class="guide-tips">
+        <view class="tip-item">• 手机号作为唯一身份标识</view>
+        <view class="tip-item">• 用于生成个性化推算结果</view>
+        <view class="tip-item">• 保障您的账户安全</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户信息 -->
+  <view class="user-section" wx:if="{{!showLoginGuide && phoneMasked}}">
+    <view class="user-card">
+      <view class="user-avatar">👤</view>
+      <view class="user-info">
+        <view class="user-phone">{{phoneMasked}}</view>
+        <view class="user-status">已登录</view>
+      </view>
+      <view class="user-actions">
+        <navigator url="/pages/profile/profile" class="icon-btn">
+          <text>⚙️</text>
+        </navigator>
+      </view>
+    </view>
+  </view>
+
+  <!-- 输入区域 -->
+  <view class="input-section">
+    <view class="section-title">基本信息</view>
+
+    <!-- 生日输入 -->
+    <view class="form-item">
+      <text class="form-label">🎂 生日</text>
+      <picker
+        class="form-picker"
+        mode="date"
+        value="{{birthday}}"
+        start="1900-01-01"
+        end="{{today}}"
+        bindchange="onBirthdayChange">
+        <view class="picker-value {{!birthday ? 'placeholder' : ''}}">
+          {{birthday || '请选择生日'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 性别选择 -->
+    <view class="form-item">
+      <text class="form-label">👤 性别</text>
+      <radio-group class="gender-group" bindchange="onGenderChange">
+        <label class="gender-label">
+          <radio value="unspecified" checked="{{gender === 'unspecified'}}" />
+          <text>保密</text>
+        </label>
+        <label class="gender-label">
+          <radio value="male" checked="{{gender === 'male'}}" />
+          <text>男</text>
+        </label>
+        <label class="gender-label">
+          <radio value="female" checked="{{gender === 'female'}}" />
+          <text>女</text>
+        </label>
+      </radio-group>
+    </view>
+  </view>
+
+  <!-- 生成按钮 -->
+  <view class="action-section">
+    <button
+      class="btn btn-primary btn-large"
+      bindtap="generateFortune"
+      disabled="{{!birthday || isGenerating || showLoginGuide}}">
+      {{isGenerating ? '生成中...' : '生成今日卡片'}}
+    </button>
+  </view>
+
+  <!-- 日期提示 -->
+  <view class="date-section" wx:if="{{!showLoginGuide}}">
+    <text class="date-text">📅 推算日期：{{today}}</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-section" wx:if="{{isGenerating}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">正在为您推算今日运势...</text>
+  </view>
+
+  <!-- 卡片列表 -->
+  <view class="cards-section" wx:if="{{!showLoginGuide && cards.length > 0 && !isGenerating}}">
+    <view class="section-title">
+      <text>📊 今日推算</text>
+      <text class="card-count">({{cards.length}})</text>
+    </view>
+
+    <block wx:for="{{cards}}" wx:key="id">
+      <card-card
+        title="{{item.title}}"
+        content="{{item.content}}"
+        color="{{item.color}}"
+        icon="{{item.icon}}"
+        bind:toggle="onCardToggle"
+        data-id="{{item.id}}">
+      </card-card>
+    </block>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-section" wx:if="{{!showLoginGuide && !isGenerating && cards.length === 0}}">
+    <view class="empty-icon">🔮</view>
+    <view class="empty-text">选择生日后点击生成按钮</view>
+  </view>
+
+  <!-- 隐私提示 -->
+  <view class="privacy-section" wx:if="{{!showLoginGuide}}">
+    <view class="privacy-text">
+      <text class="privacy-icon">🔒</text>
+      <text>您的数据仅用于推算，已脱敏处理，可随时删除。</text>
+    </view>
+  </view>
+</view>

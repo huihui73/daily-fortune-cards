@@ -1,0 +1,421 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8f9fa 0%, #f5f5f5 100%);
+  padding: 16px;
+  padding-bottom: 100px;
+}
+
+/* 认证区域 */
+.auth-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 24px 16px;
+  margin-bottom: 16px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+}
+
+.auth-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.auth-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.auth-text {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.auth-btn {
+  background: #ffffff;
+  color: #667eea;
+  font-weight: 600;
+  border: none;
+  height: 44px;
+  line-height: 44px;
+  border-radius: 22px;
+  padding: 0 32px;
+  font-size: 15px;
+}
+
+.auth-btn::after {
+  border: none;
+}
+
+/* 用户区域 */
+.user-section {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-icon {
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+.user-phone {
+  font-size: 14px;
+  color: #666;
+}
+
+/* 输入区域 */
+.input-section {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.title-text {
+  font-weight: 600;
+}
+
+.title-count {
+  color: #999;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.input-row:last-child {
+  border-bottom: none;
+}
+
+.input-label {
+  width: 60px;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.input-picker {
+  flex: 1;
+}
+
+.picker-value {
+  font-size: 14px;
+  color: #333;
+}
+
+.picker-value.placeholder {
+  color: #ccc;
+}
+
+/* 性别选择 */
+.gender-group {
+  flex: 1;
+  display: flex;
+  gap: 24px;
+}
+
+.gender-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.gender-item radio {
+  margin-right: 4px;
+}
+
+/* 操作区域 */
+.action-section {
+  margin-bottom: 16px;
+}
+
+.generate-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 24px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.generate-btn::after {
+  border: none;
+}
+
+.generate-btn[disabled] {
+  background: linear-gradient(135deg, #cccccc 0%, #dddddd 100%);
+  box-shadow: none;
+}
+
+/* 日期区域 */
+.date-section {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.date-text {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 加载状态 */
+.loading-section {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.loading-text {
+  font-size: 14px;
+  color: #999;
+}
+
+/* 卡片区域 */
+.cards-section {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 空状态 */
+.empty-section {
+  text-align: center;
+  padding: 60px 0;
+  background: #ffffff;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 14px;
+  color: #999;
+}
+
+/* 隐私提示 */
+.privacy-section {
+  text-align: center;
+  padding: 16px;
+  margin-top: 24px;
+}
+
+.privacy-text {
+  font-size: 12px;
+  color: #999;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.6;
+}
+
+.privacy-icon {
+  margin-right: 4px;
+}
+
+/* 微提示 */
+.hint-text {
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* 新增样式 - 登录引导 */
+.auth-guide {
+  margin-bottom: 16px;
+}
+
+.guide-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+}
+
+.guide-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.guide-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.guide-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 20px;
+}
+
+.guide-tips {
+  text-align: left;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 20px;
+}
+
+.tip-item {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 6px;
+}
+
+/* 用户卡片 */
+.user-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.user-status {
+  font-size: 12px;
+  color: #52c41a;
+}
+
+/* 表单项 */
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.form-label {
+  width: 80px;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.gender-label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.gender-label radio {
+  margin-right: 4px;
+}
+
+/* 按钮 */
+.btn {
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 500;
+  height: 48px;
+  line-height: 46px;
+  border: none;
+  transition: all 0.3s;
+}
+
+.btn::after {
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+  width: 100%;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary[disabled] {
+  background: linear-gradient(135deg, #cccccc 0%, #dddddd 100%);
+  box-shadow: none;
+}
+
+.btn-large {
+  height: 52px;
+  line-height: 50px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* 加载动画 */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

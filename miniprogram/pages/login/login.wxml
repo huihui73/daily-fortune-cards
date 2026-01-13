@@ -1,0 +1,103 @@
+<view class="container">
+  <!-- 登录状态 -->
+  <view class="status-section">
+    <view class="status-card {{isPhoneAuthorized ? 'success' : 'pending'}}">
+      <view class="status-icon">
+        {{isPhoneAuthorized ? '✅' : '🔒'}}
+      </view>
+      <view class="status-text">
+        <view class="status-title">
+          {{isPhoneAuthorized ? '已登录' : '需要授权'}}
+        </view>
+        <view class="status-desc">
+          {{isPhoneAuthorized ? '手机号已绑定' : '请授权手机号以使用完整功能'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 已登录显示 -->
+  <view class="logged-in-section" wx:if="{{isPhoneAuthorized}}">
+    <view class="user-info">
+      <view class="user-icon">📱</view>
+      <view class="user-details">
+        <view class="user-phone">{{phoneMasked}}</view>
+        <view class="user-status">已登录</view>
+      </view>
+    </view>
+
+    <view class="action-buttons">
+      <button class="btn btn-primary" bindtap="goToHome">
+        进入首页
+      </button>
+      <button class="btn btn-secondary" bindtap="goToProfile">
+        个人中心
+      </button>
+    </view>
+  </view>
+
+  <!-- 未登录显示 -->
+  <view class="login-section" wx:if="{{!isPhoneAuthorized}}">
+    <view class="info-card">
+      <view class="info-icon">📋</view>
+      <view class="info-title">为什么要授权手机号？</view>
+      <view class="info-content">
+        <view class="info-item">• 手机号作为您的唯一身份标识</view>
+        <view class="info-item">• 用于生成个性化推算结果</view>
+        <view class="info-item">• 保障您的账户安全</view>
+        <view class="info-item">• 支持跨设备数据同步</view>
+      </view>
+    </view>
+
+    <view class="privacy-notice">
+      <view class="privacy-icon">🔒</view>
+      <view class="privacy-text">
+        您的手机号将经过加密和脱敏处理，仅用于身份识别，不会用于其他用途。
+      </view>
+    </view>
+
+    <view class="login-buttons">
+      <button
+        class="btn btn-large btn-primary"
+        open-type="getPhoneNumber"
+        bindgetphonenumber="onGetPhoneNumber">
+        使用微信手机号登录
+      </button>
+
+      <button class="btn btn-secondary" bindtap="reLogin">
+        刷新登录状态
+      </button>
+    </view>
+  </view>
+
+  <!-- 功能介绍 -->
+  <view class="features-section">
+    <view class="section-title">功能介绍</view>
+    <view class="feature-grid">
+      <view class="feature-item">
+        <view class="feature-icon">🔮</view>
+        <view class="feature-text">周易卦象</view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">☯️</view>
+        <view class="feature-text">五行平衡</view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">🍀</view>
+        <view class="feature-text">幸运要素</view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">👔</view>
+        <view class="feature-text">穿衣建议</view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">🍲</view>
+        <view class="feature-text">饮食建议</view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">✅</view>
+        <view class="feature-text">每日任务</view>
+      </view>
+    </view>
+  </view>
+</view>

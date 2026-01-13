@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>按钮测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #764ba2;
+        }
+        .log {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>按钮测试页面</h1>
+    <button class="btn" id="testBtn1">测试按钮 1</button>
+    <button class="btn" id="testBtn2">测试按钮 2</button>
+    <button class="btn" id="testBtn3">测试按钮 3</button>
+    <button class="btn" id="clearLog">清空日志</button>
+
+    <div class="log">
+        <h3>日志：</h3>
+        <div id="logContent"></div>
+    </div>
+
+    <script>
+        // 测试 1：在 DOM 加载前获取元素（错误做法）
+        console.log('=== 测试 1：DOM 加载前获取元素 ===');
+        const btn1Wrong = document.getElementById('testBtn1');
+        console.log('testBtn1 (DOM 加载前):', btn1Wrong);
+
+        // 测试 2：在 DOM 加载后获取元素（正确做法）
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('=== 测试 2：DOM 加载后获取元素 ===');
+            const btn1Correct = document.getElementById('testBtn1');
+            console.log('testBtn1 (DOM 加载后):', btn1Correct);
+        });
+
+        // 测试 3：在 DOMContentLoaded 中获取元素并添加事件监听
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('=== 测试 3：添加事件监听 ===');
+
+            const testBtn1 = document.getElementById('testBtn1');
+            if (testBtn1) {
+                testBtn1.addEventListener('click', () => {
+                    log('✓ 测试按钮 1 被点击了！');
+                    alert('测试按钮 1 工作正常！');
+                });
+                console.log('✓ testBtn1 事件监听已添加');
+            }
+
+            const testBtn2 = document.getElementById('testBtn2');
+            if (testBtn2) {
+                testBtn2.addEventListener('click', () => {
+                    log('✓ 测试按钮 2 被点击了！');
+                    alert('测试按钮 2 工作正常！');
+                });
+                console.log('✓ testBtn2 事件监听已添加');
+            }
+
+            const testBtn3 = document.getElementById('testBtn3');
+            if (testBtn3) {
+                testBtn3.addEventListener('click', () => {
+                    log('✓ 测试按钮 3 被点击了！');
+                    alert('测试按钮 3 工作正常！');
+                });
+                console.log('✓ testBtn3 事件监听已添加');
+            }
+
+            const clearLog = document.getElementById('clearLog');
+            if (clearLog) {
+                clearLog.addEventListener('click', () => {
+                    log('清空日志');
+                    document.getElementById('logContent').innerHTML = '';
+                });
+            }
+
+            log('✓ 所有按钮事件监听已添加');
+        });
+
+        // 日志函数
+        function log(message) {
+            const logContent = document.getElementById('logContent');
+            const time = new Date().toLocaleTimeString();
+            const p = document.createElement('p');
+            p.textContent = `[${time}] ${message}`;
+            logContent.appendChild(p);
+        }
+
+        console.log('页面脚本加载完成');
+    </script>
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人资料 - ✨ 今日能量卡</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+        }
+
+        .back-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 1rem;
+            color: #fff;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .phone-display {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 1rem;
+            color: #fff;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .phone-display strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateX(-2px);
+        }
+
+        .back-btn:active {
+            transform: translateX(0);
+        }
+
+        .profile-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .profile-header p {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .profile-form {
+            margin-bottom: 20px;
+        }
+
+        .form-item {
+            margin-bottom: 20px;
+        }
+
+        .form-item label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-item input[type="text"],
+        .form-item select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .form-item input:focus,
+        .form-item select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* 日期选择器样式 */
+        .date-picker {
+            position: relative;
+        }
+
+        .date-picker input {
+            width: 100%;
+            padding: 12px 16px;
+            padding-right: 50px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        .date-picker input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .date-picker .calendar-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            pointer-events: none;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .date-picker input:focus + .calendar-icon {
+            color: #667eea;
+        }
+
+        /* 日历弹窗 */
+        .calendar-popup {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            z-index: 1000;
+            display: none;
+            animation: calendarSlideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes calendarSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .calendar-popup.active {
+            display: block;
+        }
+
+        /* 日历头部 */
+        .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .calendar-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .calendar-nav-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .calendar-nav-btn:hover {
+            background: #667eea;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .calendar-nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        .calendar-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        /* 日历星期 */
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .calendar-weekday {
+            text-align: center;
+            font-size: 13px;
+            font-weight: 500;
+            color: #999;
+            padding: 8px;
+        }
+
+        /* 日历日期 */
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .calendar-day:hover:not(.empty):not(.disabled) {
+            background: #f0f7ff;
+            color: #667eea;
+            transform: scale(1.05);
+        }
+
+        .calendar-day.empty {
+            cursor: default;
+        }
+
+        .calendar-day.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .calendar-day.today {
+            background: #667eea;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .calendar-day.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .calendar-day.selected:hover {
+            transform: scale(1.05);
+        }
+
+        /* 快捷选择按钮 */
+        .calendar-footer {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .calendar-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calendar-btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .calendar-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .calendar-btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .calendar-btn-secondary {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .calendar-btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        /* 响应式 */
+        @media (max-width: 480px) {
+            .calendar-day {
+                font-size: 13px;
+            }
+
+            .calendar-weekday {
+                font-size: 12px;
+                padding: 6px;
+            }
+
+            .calendar-nav-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+
+            .calendar-title {
+                font-size: 16px;
+                min-width: 150px;
+            }
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-text {
+            background: transparent;
+            color: #667eea;
+            padding: 10px;
+        }
+
+        .btn-text:hover {
+            text-decoration: underline;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #fff;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 返回导航 -->
+        <div class="back-nav">
+            <button class="back-btn" id="backBtn">
+                ← 返回主页
+            </button>
+            <div class="phone-display">
+                📱 <strong id="phoneMasked">加载中...</strong>
+            </div>
+        </div>
+
+        <!-- 个人资料卡片 -->
+        <div class="profile-card">
+            <div class="profile-header">
+                <h1>📋 个人资料</h1>
+                <p>完善个人资料，开启今日能量之旅</p>
+            </div>
+
+            <!-- 个人资料表单 -->
+            <div class="profile-form">
+                <div class="form-item">
+                    <label for="birthday">🎂 生日</label>
+                    <div class="date-picker" id="datePicker">
+                        <input
+                            type="text"
+                            id="birthday"
+                            name="birthday"
+                            placeholder="选择您的生日"
+                            readonly>
+                        <span class="calendar-icon">📅</span>
+
+                        <!-- 日历弹窗 -->
+                        <div class="calendar-popup" id="calendarPopup">
+                            <div class="calendar-header">
+                                <button class="calendar-nav-btn" id="prevYear">«</button>
+                                <button class="calendar-nav-btn" id="prevMonth">‹</button>
+                                <div class="calendar-nav">
+                                    <div class="calendar-title" id="calendarTitle">2025年1月</div>
+                                </div>
+                                <button class="calendar-nav-btn" id="nextMonth">›</button>
+                                <button class="calendar-nav-btn" id="nextYear">»</button>
+                            </div>
+
+                            <div class="calendar-weekdays">
+                                <div class="calendar-weekday">日</div>
+                                <div class="calendar-weekday">一</div>
+                                <div class="calendar-weekday">二</div>
+                                <div class="calendar-weekday">三</div>
+                                <div class="calendar-weekday">四</div>
+                                <div class="calendar-weekday">五</div>
+                                <div class="calendar-weekday">六</div>
+                            </div>
+
+                            <div class="calendar-days" id="calendarDays"></div>
+
+                            <div class="calendar-footer">
+                                <button class="calendar-btn calendar-btn-secondary" id="todayBtn">今天</button>
+                                <button class="calendar-btn calendar-btn-primary" id="confirmBtn">确认</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-item">
+                    <label for="gender">👤 性别</label>
+                    <select id="gender" name="gender">
+                        <option value="">请选择</option>
+                        <option value="male">男</option>
+                        <option value="female">女</option>
+                        <option value="other">其他</option>
+                        <option value="unspecified">保密</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" id="saveBtn">
+                    💾 保存资料
+                </button>
+                <button class="btn btn-secondary" id="skipBtn">
+                    跳过，以后填写
+                </button>
+                <button class="btn btn-text" id="changePasswordBtn">
+                    🔒 修改密码
+                </button>
+                <button class="btn btn-text" id="logoutBtn">
+                    退出登录
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载遮罩 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text" id="loadingText">保存中...</p>
+    </div>
+
+    <script src="js/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页测试 - 每日推算卡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 头部 */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 16px 24px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            color: #fff;
+            margin: 0;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-info {
+            font-size: 14px;
+            color: rgba(255,255,255, 0.9);
+        }
+
+        #phoneMasked {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .btn-text {
+            background: transparent;
+            border: 1px solid rgba(255,255,255, 0.5);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-text:hover {
+            background: rgba(255,255,255, 0.1);
+        }
+
+        /* 内容区域 */
+        .content-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .debug-section {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .debug-section h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .debug-log {
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .debug-log p {
+            margin: 3px 0;
+        }
+
+        .test-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .test-btn {
+            padding: 8px 16px;
+            background: #667eea;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .test-btn:hover {
+            background: #764ba2;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="header-left">
+                <h1 class="logo">🔮 每日推算卡</h1>
+            </div>
+            <div class="header-right">
+                <span class="user-info">📱 <span id="phoneMasked">未登录</span></span>
+                <button class="btn-text" id="profileBtn">👤 资料设置</button>
+                <button class="btn-text" id="logoutBtn">退出</button>
+            </div>
+        </div>
+
+        <!-- 测试区域 -->
+        <div class="content-section">
+            <h2>按钮测试</h2>
+            <p>点击下方按钮测试功能：</p>
+            <div class="test-buttons">
+                <button class="test-btn" id="testDirect">直接测试按钮</button>
+                <button class="test-btn" id="testProfile">测试资料设置</button>
+                <button class="test-btn" id="testLogout">测试退出</button>
+            </div>
+            <div id="status" class="status"></div>
+        </div>
+
+        <!-- 调试区域 -->
+        <div class="content-section debug-section">
+            <h3>调试信息</h3>
+            <div class="debug-log" id="debugLog"></div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let logoutBtn, profileBtn, phoneMaskedEl;
+
+        // 添加日志
+        function addLog(message) {
+            const log = document.getElementById('debugLog');
+            const p = document.createElement('p');
+            const time = new Date().toLocaleTimeString();
+            p.textContent = `[${time}] ${message}`;
+            log.appendChild(p);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // 显示状态
+        function showStatus(message, type = 'success') {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            addLog('DOM 加载完成');
+            initDomElements();
+            checkAuthStatus();
+            initEventListeners();
+        });
+
+        // 初始化 DOM 元素
+        function initDomElements() {
+            addLog('初始化 DOM 元素...');
+            logoutBtn = document.getElementById('logoutBtn');
+            profileBtn = document.getElementById('profileBtn');
+            phoneMaskedEl = document.getElementById('phoneMasked');
+
+            addLog(`logoutBtn: ${logoutBtn ? '✓' : '✗'}`);
+            addLog(`profileBtn: ${profileBtn ? '✓' : '✗'}`);
+            addLog(`phoneMaskedEl: ${phoneMaskedEl ? '✓' : '✗'}`);
+        }
+
+        // 检查登录状态
+        function checkAuthStatus() {
+            const token = localStorage.getItem('token');
+            const phone = localStorage.getItem('phone');
+
+            addLog(`检查登录状态: token=${!!token}, phone=${!!phone}`);
+
+            if (phone) {
+                phoneMaskedEl.textContent = phone.substr(0, 3) + '****' + phone.substr(7);
+            }
+        }
+
+        // 初始化事件监听
+        function initEventListeners() {
+            addLog('初始化事件监听...');
+
+            if (profileBtn) {
+                profileBtn.addEventListener('click', () => {
+                    addLog('✓ 点击了资料设置按钮');
+                    showStatus('✓ 资料设置按钮工作正常！');
+                    alert('✓ 资料设置按钮工作正常！\n即将跳转到 profile.html');
+                    // window.location.href = 'profile.html';
+                });
+                addLog('✓ profileBtn 事件监听已添加');
+            } else {
+                addLog('✗ profileBtn 元素不存在');
+            }
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    addLog('✓ 点击了退出按钮');
+                    showStatus('✓ 退出按钮工作正常！');
+                    if (confirm('确认退出登录？')) {
+                        localStorage.clear();
+                        alert('已退出登录');
+                        location.reload();
+                    }
+                });
+                addLog('✓ logoutBtn 事件监听已添加');
+            } else {
+                addLog('✗ logoutBtn 元素不存在');
+            }
+
+            // 测试按钮
+            document.getElementById('testDirect').addEventListener('click', () => {
+                addLog('✓ 点击了直接测试按钮');
+                showStatus('✓ 直接测试按钮工作正常！');
+            });
+
+            document.getElementById('testProfile').addEventListener('click', () => {
+                addLog('✓ 点击了测试资料设置按钮');
+                showStatus('✓ 测试资料设置按钮工作正常！');
+                if (profileBtn) {
+                    profileBtn.click();
+                } else {
+                    showStatus('✗ profileBtn 不存在', 'error');
+                }
+            });
+
+            document.getElementById('testLogout').addEventListener('click', () => {
+                addLog('✓ 点击了测试退出按钮');
+                showStatus('✓ 测试退出按钮工作正常！');
+                if (logoutBtn) {
+                    logoutBtn.click();
+                } else {
+                    showStatus('✗ logoutBtn 不存在', 'error');
+                }
+            });
+        }
+
+        // 调试信息
+        console.log('脚本加载完成');
+        console.log('localStorage:', localStorage);
+    </script>
+</body>
+</html>

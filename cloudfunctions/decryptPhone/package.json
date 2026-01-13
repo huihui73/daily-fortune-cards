@@ -1,0 +1,9 @@
+{
+  "name": "decryptPhone",
+  "version": "1.0.0",
+  "description": "WeChat Mini Program Phone Number Decryption Cloud Function",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

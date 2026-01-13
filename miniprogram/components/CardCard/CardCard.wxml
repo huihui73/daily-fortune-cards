@@ -1,0 +1,23 @@
+<view class="card" style="border-left: 4px solid {{color}};" bindtap="toggle">
+  <view class="card-header">
+    <view class="card-title">
+      <text wx:if="{{icon}}" class="card-icon">{{icon}}</text>
+      <text class="title-text">{{title}}</text>
+    </view>
+    <view class="card-toggle" wx:if="{{expandable}}">
+      <text class="toggle-icon">{{isExpanded ? '−' : '+'}}</text>
+    </view>
+  </view>
+
+  <view class="card-content-wrapper" wx:if="{{isExpanded || !expandable}}">
+    <view class="card-content">
+      <text class="content-text">{{content}}</text>
+    </view>
+
+    <view class="card-actions" wx:if="{{isExpanded}}">
+      <button class="action-btn" catchtap="copyContent" size="mini" plain>
+        复制
+      </button>
+    </view>
+  </view>
+</view>
