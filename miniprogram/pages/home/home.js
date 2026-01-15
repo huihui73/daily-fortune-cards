@@ -114,7 +114,7 @@ Page({
   },
 
   checkAndRegenerate() {
-    const { birthday, lastGenerateDate, today } = this.data;
+    const { birthday, lastGenerateDate, today, isGenerating, cards } = this.data;
 
     if (birthday) {
       const cacheKey = fortuneEngine.getCacheKey(birthday, today);
@@ -122,9 +122,11 @@ Page({
 
       if (cachedFortune) {
         this.setData({ cards: cachedFortune });
+      } else if (cards.length === 0 && !isGenerating) {
+        this.generateFortune();
       } else if (lastGenerateDate !== today) {
         this.generateFortune();
-      } else {
+      } else if (lastGenerateDate) {
         const lastCacheKey = fortuneEngine.getCacheKey(birthday, lastGenerateDate);
         const lastCachedFortune = wx.getStorageSync(lastCacheKey);
 

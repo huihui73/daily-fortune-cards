@@ -1,7 +1,7 @@
 // web/js/login.js
 
 // 配置
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'http://localhost:8890/api';
 
 // 全局状态
 let currentPhone = '';

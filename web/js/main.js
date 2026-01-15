@@ -1,8 +1,8 @@
 // web/js/main.js
 
 // 配置
-const API_BASE_URL = 'http://localhost:3000/api';
-const ACTIONS_API_URL = 'http://localhost:3000/api/actions';
+const API_BASE_URL = 'http://localhost:8890/api';
+const ACTIONS_API_URL = 'http://localhost:8890/api/actions';
 
 // DOM 元素
 let cardsContainer, cardCountEl, fortuneDateEl;
@@ -171,16 +171,149 @@ function getCardType(cardId) {
 
 // 处理登出
 function handleLogout() {
-  if (!confirm('确认退出登录？')) return;
-
-  localStorage.removeItem('token');
-  localStorage.removeItem('userId');
-  localStorage.removeItem('phone');
-  localStorage.removeItem('birthday');
-  localStorage.removeItem('gender');
-
-  window.location.href = 'login.html';
+  showLogoutModal();
 }
+
+function showLogoutModal() {
+  let overlay = document.getElementById('logout-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'logout-overlay';
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.background = 'rgba(0,0,0,0.5)';
+    overlay.style.display = 'flex';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.zIndex = '10000';
+
+    const modal = document.createElement('div');
+    modal.id = 'logout-modal';
+    modal.style.background = '#fff';
+    modal.style.borderRadius = '8px';
+    modal.style.padding = '20px';
+    modal.style.width = '320px';
+    modal.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
+    modal.style.textAlign = 'center';
+
+    const msg = document.createElement('div');
+    msg.textContent = '确认退出登录？';
+    msg.style.marginBottom = '16px';
+
+    const btns = document.createElement('div');
+    btns.style.display = 'flex';
+    btns.style.justifyContent = 'flex-end';
+    btns.style.gap = '8px';
+
+    const cancelBtn = document.createElement('button');
+    cancelBtn.textContent = '取消';
+    cancelBtn.style.padding = '8px 14px';
+    cancelBtn.style.borderRadius = '6px';
+    cancelBtn.style.border = '1px solid #ccc';
+    cancelBtn.style.background = '#fff';
+    cancelBtn.addEventListener('click', () => { overlay.remove(); });
+
+    const confirmBtn = document.createElement('button');
+    confirmBtn.textContent = '确认退出';
+    confirmBtn.style.padding = '8px 14px';
+    confirmBtn.style.borderRadius = '6px';
+    confirmBtn.style.border = '1px solid #e53935';
+    confirmBtn.style.background = '#e53935';
+    confirmBtn.style.color = '#fff';
+    confirmBtn.addEventListener('click', () => {
+      overlay.remove();
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('phone');
+      localStorage.removeItem('birthday');
+      localStorage.removeItem('gender');
+      window.location.href = 'login.html';
+    });
+
+    btns.appendChild(cancelBtn);
+    btns.appendChild(confirmBtn);
+    modal.appendChild(msg);
+    modal.appendChild(btns);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+  } else {
+    overlay.style.display = 'flex';
+  }
+}
+
+function showLogoutModal() {
+  let overlay = document.getElementById('logout-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'logout-overlay';
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.background = 'rgba(0,0,0,0.5)';
+    overlay.style.display = 'flex';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.zIndex = '10000';
+
+    const modal = document.createElement('div');
+    modal.id = 'logout-modal';
+    modal.style.background = '#fff';
+    modal.style.borderRadius = '8px';
+    modal.style.padding = '20px';
+    modal.style.width = '320px';
+    modal.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
+    modal.style.textAlign = 'center';
+
+    const msg = document.createElement('div');
+    msg.textContent = '确认退出登录？';
+    msg.style.marginBottom = '16px';
+
+    const btns = document.createElement('div');
+    btns.style.display = 'flex';
+    btns.style.justifyContent = 'flex-end';
+    btns.style.gap = '8px';
+
+    const cancelBtn = document.createElement('button');
+    cancelBtn.textContent = '取消';
+    cancelBtn.style.padding = '8px 14px';
+    cancelBtn.style.borderRadius = '6px';
+    cancelBtn.style.border = '1px solid #ccc';
+    cancelBtn.style.background = '#fff';
+    cancelBtn.addEventListener('click', () => { overlay.remove(); });
+
+    const confirmBtn = document.createElement('button');
+    confirmBtn.textContent = '确认退出';
+    confirmBtn.style.padding = '8px 14px';
+    confirmBtn.style.borderRadius = '6px';
+    confirmBtn.style.border = '1px solid #e53935';
+    confirmBtn.style.background = '#e53935';
+    confirmBtn.style.color = '#fff';
+    confirmBtn.addEventListener('click', () => {
+      overlay.remove();
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('phone');
+      localStorage.removeItem('birthday');
+      localStorage.removeItem('gender');
+      window.location.href = 'login.html';
+    });
+
+    btns.appendChild(cancelBtn);
+    btns.appendChild(confirmBtn);
+    modal.appendChild(msg);
+    modal.appendChild(btns);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+  } else {
+    overlay.style.display = 'flex';
+  }
+}
+
 
 // 加载用户数据
 async function loadUserData() {
@@ -347,7 +480,7 @@ function trackCardViewTime(cardId) {
           });
         }
 
-        // 监听点击卡片已移除点赞行为\n        // cardElement.addEventListener('click', () => {\n        //   trackAction('like', cardId, 0);\n        // });
+        // 监听点击卡片
 
         // 监听长按（收藏）
         let longPressTimer;
@@ -378,9 +511,9 @@ function showFavoriteToast(cardId) {
   toast.textContent = '❤️ 已收藏';
   toast.style.cssText = `
     position: fixed;
-    top: 20px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     background: #667eea;
     color: #fff;
     padding: 12px 24px;
@@ -414,7 +547,6 @@ function createCardElement(card, index) {
         <span class="card-icon">${card.icon}</span>
         <span>${card.title}</span>
       </div>
-      <div class=\"card-actions\"></div>
     </div>
     <div class="card-content">
       <div class="card-content-text">${formatCardContent(card.content)}</div>
@@ -425,37 +557,6 @@ function createCardElement(card, index) {
   `;
 
   return cardEl;
-}
-
-// 处理点赞（已移除）已移除（已禁用）\n// async function handleLike(cardId) {\n//   await trackAction('like', cardId, 0);\n//   showReactionToast(cardId, 'like');\n// }
-
-// 处理不喜欢 (已移除)\n// async function handleDislike(cardId) {\n//   await trackAction('dislike', cardId, 0);\n//   showReactionToast(cardId, 'dislike');\n// }
-
-// 显示反馈 Toast
-function showReactionToast(cardId, type) {
-  const toast = document.createElement('div');
-  toast.className = `reaction-toast reaction-${type}`;
-  toast.textContent = type === 'like' ? '👍 已记录喜欢' : '👎 已记录不喜欢';
-  toast.style.cssText = `
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: ${type === 'like' ? '#4caf50' : '#f44336'};
-    color: #fff;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 500;
-    z-index: 10000;
-    animation: toastIn 0.3s ease, toastOut 0.3s ease 1.7s;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  `;
-
-  document.body.appendChild(toast);
-
-  setTimeout(() => {
-    toast.remove();
-  }, 2000);
 }
 
 // 格式化卡片内容
@@ -493,5 +594,3 @@ function showError(message) {
 }
 
 // 全局函数供 HTML 调用
-// window.handleLike = handleLike; // 已移除对外暴露
-window.handleDislike = handleDislike;
