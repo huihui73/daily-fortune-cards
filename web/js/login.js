@@ -302,7 +302,7 @@ function showToast(message, type = 'error') {
 
 // 处理密码登录
 async function handlePasswordLogin() {
-  const phone = phoneInput.value.trim();
+  let phone = (phoneInput && phoneInput.value ? phoneInput.value : '').trim();\n  if (!phone && codePhoneInput) { phone = codePhoneInput.value.trim(); }\n\n  // 继续使用 phone 变量进行后续逻辑\n  // 这里将后续的 code 中的 phone 使用变量改为同一个 phone
   const password = passwordInput.value.trim();
 
   if (!phone || phone.length !== 11) {
