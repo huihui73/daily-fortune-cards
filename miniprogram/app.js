@@ -6,8 +6,18 @@ App({
       return
     }
 
-    // 替换为你在微信开发者平台配置的云环境 ID
-    wx.cloud.init({ env: "YOUR_CLOUD_ENV_ID" })
+    // 云环境初始化（请替换为实际环境ID；若未配置实际ID，将不启用云能力）
+    try {
+      const CLOUD_ENV_ID = "YOUR_CLOUD_ENV_ID"; // 生产环境请改为实际值
+      if (CLOUD_ENV_ID && CLOUD_ENV_ID !== "YOUR_CLOUD_ENV_ID" && wx.cloud) {
+        wx.cloud.init({ env: CLOUD_ENV_ID });
+        console.log('云开发已初始化，环境ID：', CLOUD_ENV_ID);
+      } else {
+        console.warn('未配置实际云环境ID，云能力不可用');
+      }
+    } catch (err) {
+      console.warn('云开发初始化失败，后续云函数调用将失败:', err && err.message ? err.message : err);
+    }
 
     // 检查并初始化用户状态
     this.checkUserStatus()
