@@ -5,7 +5,16 @@ const authController = require('../controllers/authController');
 const authMiddleware = require('../middleware/auth');
 const { body, validationResult } = require('express-validator');
 
-// 验证中间件
+const isPhone = (value) => {
+  if (!value) return false;
+  return /^1[3-9]\d{9}$/.test(value);
+};
+
+const getPublicPhone = (value) => {
+  const phone = value.replace(/\D/g, '').substr(0, 3) + '****' + value.substr(7);
+  return phone;
+};
+
 const validateRequest = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -16,12 +25,6 @@ const validateRequest = (req, res, next) => {
     });
   }
   next();
-};
-
-// 手机号验证（11位数字）
-const isPhone = (value) => {
-  if (!value) return false;
-  return /^1[3-9]\d{9}$/.test(value);
 };
 
 // 公开路由

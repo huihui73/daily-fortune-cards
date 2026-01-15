@@ -177,12 +177,21 @@ function confirmSelection() {
 }
 
 // 切换日历显示/隐藏
-function toggleCalendar() {
+function toggleCalendar(event) {
+  if (event) {
+    event.stopPropagation();
+  }
   calendarPopup.classList.toggle('active');
 }
 
 // 点击外部关闭日历
 function handleClickOutside(event) {
+  // 确保日历弹窗已经显示
+  if (!calendarPopup.classList.contains('active')) {
+    return;
+  }
+
+  // 检查点击是否在日期选择器内部
   if (!datePicker.contains(event.target)) {
     calendarPopup.classList.remove('active');
   }
@@ -279,10 +288,9 @@ function loadSavedData() {
 function initEventListeners() {
   console.log('初始化事件监听...');
 
-  // 日历选择器事件
+  // 日历选择器事件（只使用 click 事件，避免和 focus 冲突）
   if (birthdayInput) {
     birthdayInput.addEventListener('click', toggleCalendar);
-    birthdayInput.addEventListener('focus', toggleCalendar);
   }
 
   if (prevYearBtn) {

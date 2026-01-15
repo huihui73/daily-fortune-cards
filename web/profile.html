@@ -4,55 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人资料 - ✨ 今日能量卡</title>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/common.css">
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
+            padding: 20px;
+            min-height: 100vh;
         }
 
         .container {
             max-width: 500px;
-            margin: 40px auto;
+            margin: 0 auto;
         }
 
+        /* 返回导航 */
         .back-nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
+            animation: fadeIn 0.5s ease-out;
         }
 
         .back-btn {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
+            gap: 8px;
+            padding: 12px 16px;
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 1rem;
-            color: #fff;
-            font-size: 0.875rem;
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all var(--transition-base);
             font-weight: 500;
+            backdrop-filter: blur(10px);
         }
 
         .phone-display {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
+            gap: 8px;
+            padding: 12px 16px;
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 1rem;
-            color: #fff;
-            font-size: 0.875rem;
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
             font-weight: 500;
+            backdrop-filter: blur(10px);
         }
 
         .phone-display strong {
-            color: #fff;
+            color: white;
             font-weight: 600;
         }
 
@@ -66,81 +71,82 @@
             transform: translateX(0);
         }
 
+        /* 个人资料卡片 */
         .profile-card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.5s ease-out;
         }
 
         .profile-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
         .profile-header h1 {
-            color: #333;
+            color: var(--gray-800);
             font-size: 28px;
             margin-bottom: 8px;
+            font-weight: 700;
         }
 
         .profile-header p {
-            color: #999;
+            color: var(--gray-400);
             font-size: 14px;
         }
 
+        /* 表单 */
         .profile-form {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
-        .form-item {
-            margin-bottom: 20px;
+        .form-group {
+            margin-bottom: 24px;
         }
 
-        .form-item label {
+        .form-label {
             display: block;
             font-size: 14px;
-            font-weight: 500;
-            color: #333;
+            font-weight: 600;
+            color: var(--gray-800);
             margin-bottom: 8px;
         }
 
-        .form-item input[type="text"],
-        .form-item select {
+        .form-input,
+        .form-select {
             width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            padding: 14px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
             font-size: 15px;
-            transition: border-color 0.3s;
+            transition: all var(--transition-base);
+            font-family: inherit;
+            background: white;
         }
 
-        .form-item input:focus,
-        .form-item select:focus {
+        .form-input:focus,
+        .form-select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        /* 日期选择器样式 */
+        .form-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        /* 日期选择器 */
         .date-picker {
             position: relative;
         }
 
         .date-picker input {
-            width: 100%;
-            padding: 12px 16px;
             padding-right: 50px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 15px;
-            transition: border-color 0.3s;
             cursor: pointer;
-            background: #fff;
-        }
-
-        .date-picker input:focus {
-            outline: none;
-            border-color: #667eea;
+            background: white;
         }
 
         .date-picker .calendar-icon {
@@ -150,12 +156,12 @@
             transform: translateY(-50%);
             font-size: 20px;
             pointer-events: none;
-            color: #999;
-            transition: color 0.3s;
+            color: var(--gray-400);
+            transition: color var(--transition-base);
         }
 
         .date-picker input:focus + .calendar-icon {
-            color: #667eea;
+            color: var(--primary-color);
         }
 
         /* 日历弹窗 */
@@ -164,24 +170,13 @@
             top: calc(100% + 8px);
             left: 0;
             right: 0;
-            background: #fff;
+            background: white;
             border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-lg);
             padding: 20px;
             z-index: 1000;
             display: none;
-            animation: calendarSlideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes calendarSlideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            animation: slideDown 0.3s ease-out;
         }
 
         .calendar-popup.active {
@@ -195,7 +190,7 @@
             justify-content: space-between;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 2px solid var(--gray-100);
         }
 
         .calendar-nav {
@@ -210,19 +205,20 @@
             width: 36px;
             height: 36px;
             border: none;
-            background: #f5f5f5;
+            background: var(--gray-100);
             border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
-            transition: all 0.3s;
+            transition: all var(--transition-base);
+            color: var(--gray-600);
         }
 
         .calendar-nav-btn:hover {
-            background: #667eea;
-            color: #fff;
+            background: var(--primary-color);
+            color: white;
             transform: scale(1.1);
         }
 
@@ -233,7 +229,7 @@
         .calendar-title {
             font-size: 18px;
             font-weight: 600;
-            color: #333;
+            color: var(--gray-800);
             min-width: 180px;
             text-align: center;
         }
@@ -250,7 +246,7 @@
             text-align: center;
             font-size: 13px;
             font-weight: 500;
-            color: #999;
+            color: var(--gray-400);
             padding: 8px;
         }
 
@@ -270,14 +266,14 @@
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
-            color: #666;
-            transition: all 0.2s;
+            color: var(--gray-600);
+            transition: all var(--transition-fast);
             position: relative;
         }
 
         .calendar-day:hover:not(.empty):not(.disabled) {
-            background: #f0f7ff;
-            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-color);
             transform: scale(1.05);
         }
 
@@ -286,19 +282,19 @@
         }
 
         .calendar-day.disabled {
-            color: #ccc;
+            color: var(--gray-300);
             cursor: not-allowed;
         }
 
         .calendar-day.today {
-            background: #667eea;
-            color: #fff;
+            background: var(--primary-color);
+            color: white;
             font-weight: 600;
         }
 
         .calendar-day.selected {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
+            background: var(--primary-gradient);
+            color: white;
             font-weight: 600;
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
@@ -311,25 +307,25 @@
         .calendar-footer {
             display: flex;
             gap: 8px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 2px solid #f0f0f0;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px solid var(--gray-100);
         }
 
         .calendar-btn {
             flex: 1;
-            padding: 10px 16px;
+            padding: 12px;
             border: none;
             border-radius: 8px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all var(--transition-base);
         }
 
         .calendar-btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
+            background: var(--primary-gradient);
+            color: white;
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
@@ -343,16 +339,103 @@
         }
 
         .calendar-btn-secondary {
-            background: #f5f5f5;
-            color: #666;
+            background: var(--gray-100);
+            color: var(--gray-600);
         }
 
         .calendar-btn-secondary:hover {
-            background: #e0e0e0;
+            background: var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        /* 按钮 */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-600);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        .btn-text {
+            background: transparent;
+            color: var(--primary-color);
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        .btn-text:hover {
+            background: rgba(102, 126, 234, 0.1);
+            text-decoration: underline;
         }
 
         /* 响应式 */
         @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 0;
+            }
+
+            .profile-card {
+                padding: 24px;
+                border-radius: 20px;
+            }
+
+            .back-nav {
+                margin-bottom: 16px;
+            }
+
+            .back-btn,
+            .phone-display {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .profile-header h1 {
+                font-size: 24px;
+            }
+
             .calendar-day {
                 font-size: 13px;
             }
@@ -372,81 +455,11 @@
                 font-size: 16px;
                 min-width: 150px;
             }
-        }
 
-        .btn {
-            padding: 14px 24px;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: #f5f5f5;
-            color: #666;
-        }
-
-        .btn-secondary:hover {
-            background: #e0e0e0;
-        }
-
-        .btn-text {
-            background: transparent;
-            color: #667eea;
-            padding: 10px;
-        }
-
-        .btn-text:hover {
-            text-decoration: underline;
-        }
-
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        .loading-spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 16px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            color: #fff;
-            font-size: 16px;
+            .btn {
+                padding: 14px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -471,13 +484,14 @@
 
             <!-- 个人资料表单 -->
             <div class="profile-form">
-                <div class="form-item">
-                    <label for="birthday">🎂 生日</label>
+                <div class="form-group">
+                    <label class="form-label">🎂 生日</label>
                     <div class="date-picker" id="datePicker">
                         <input
                             type="text"
                             id="birthday"
                             name="birthday"
+                            class="form-input"
                             placeholder="选择您的生日"
                             readonly>
                         <span class="calendar-icon">📅</span>
@@ -514,9 +528,9 @@
                     </div>
                 </div>
 
-                <div class="form-item">
-                    <label for="gender">👤 性别</label>
-                    <select id="gender" name="gender">
+                <div class="form-group">
+                    <label class="form-label">👤 性别</label>
+                    <select id="gender" name="gender" class="form-select">
                         <option value="">请选择</option>
                         <option value="male">男</option>
                         <option value="female">女</option>

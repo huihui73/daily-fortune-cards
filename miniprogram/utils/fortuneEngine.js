@@ -369,14 +369,17 @@ const fortune = {
         title: '五行平衡',
         content: `木 ${el.wood} / 火 ${el.fire} / 土 ${el.earth} / 金 ${el.metal} / 水 ${el.water}\n\n${elementsAdvice.join('\n')}`,
         color: '#4ECDC4',
-        icon: '☯️'
+        icon: '☯️',
+        elements: el
       },
       {
         id: 'c4',
         title: '幸运要素',
         content: `幸运色：${fortune.luckyColor}\n幸运数字：${fortune.luckyNumber}`,
         color: fortune.luckyColorCode,
-        icon: '🍀'
+        icon: '🍀',
+        luckyColorCode: fortune.luckyColorCode,
+        luckyColorName: fortune.luckyColor
       },
       {
         id: 'c5',
@@ -397,7 +400,12 @@ const fortune = {
         title: '每日微任务',
         content: dailyTasks.map((task, i) => `${i + 1}. ${task}`).join('\n'),
         color: '#FFA07A',
-        icon: '✅'
+        icon: '✅',
+        tasks: dailyTasks.map((task, i) => ({
+          id: `task_${i}`,
+          text: task,
+          completed: false
+        }))
       },
       {
         id: 'c8',

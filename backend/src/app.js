@@ -8,10 +8,11 @@ const morgan = require('morgan');
 const path = require('path');
 const authRoutes = require('./routes/auth');
 const cardsRoutes = require('./routes/cards');
+const actionsRoutes = require('./routes/actions');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8890;
 
 // 中间件
 app.use(helmet({
@@ -37,6 +38,7 @@ if (process.env.NODE_ENV === 'development') {
 // 路由
 app.use('/api/auth', authRoutes);
 app.use('/api/cards', cardsRoutes);
+app.use('/api/actions', actionsRoutes);
 
 // 健康检查
 app.get('/health', (req, res) => {

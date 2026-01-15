@@ -3,173 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登录 - 每日推算卡</title>
+    <title>登录 - ✨ 今日能量卡</title>
+    <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/auth.css">
     <style>
+        body {
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
         .auth-container {
-            animation: fadeIn 0.5s ease-out;
+            width: 100%;
+            max-width: 420px;
+            animation: slideUp 0.5s ease-out;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* 登录卡片 */
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
         }
 
-        /* 登录页签容器 */
-        .login-tabs-container {
-            margin-bottom: 24px;
+        /* Logo */
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 32px;
         }
 
+        .auth-logo h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .auth-logo p {
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        /* 页签容器 */
         .login-tabs {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             margin-bottom: 24px;
-            background: #f5f5f5;
-            padding: 6px;
+            background: var(--gray-100);
+            padding: 4px;
             border-radius: 12px;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 14px;
+            padding: 12px;
             border: none;
             background: transparent;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 15px;
             font-weight: 600;
-            color: #666;
+            color: var(--gray-600);
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all var(--transition-base);
             position: relative;
             overflow: hidden;
         }
 
-        .tab-btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(102, 126, 234, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.3s ease, height 0.3s ease;
-        }
-
-        .tab-btn:active::after {
-            width: 200px;
-            height: 200px;
-        }
-
         .tab-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-            transform: translateY(-2px);
+            background: white;
+            color: var(--primary-color);
+            box-shadow: var(--shadow-sm);
         }
 
         .tab-btn:hover:not(.active) {
-            background: #e8e8e8;
-            color: #333;
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--gray-800);
         }
 
-        /* 登录表单内容 */
+        /* 表单容器 */
         .login-form {
             display: none;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
         }
 
         .login-form.active {
             display: block;
+            animation: fadeIn 0.3s ease-out;
         }
 
+        /* 表单组 */
         .form-group {
             margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .form-group input::placeholder {
-            color: #ccc;
-        }
-
-        /* 密码输入框 */
-        .password-input {
             position: relative;
         }
 
-        .password-input input {
-            padding-right: 50px;
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 8px;
         }
 
-        .password-input .toggle-password {
+        .form-input-wrapper {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            padding-right: 50px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all var(--transition-base);
+            font-family: inherit;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        /* 验证码发送按钮 */
+        .send-code-btn {
             position: absolute;
-            right: 12px;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 8px 16px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .send-code-btn:hover:not(:disabled) {
+            background: var(--secondary-color);
+        }
+
+        .send-code-btn:disabled {
+            background: var(--gray-200);
+            color: var(--gray-400);
+            cursor: not-allowed;
+        }
+
+        /* 切换密码显示 */
+        .toggle-password {
+            position: absolute;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
             font-size: 20px;
             cursor: pointer;
-            padding: 8px;
-            transition: all 0.3s ease;
+            color: var(--gray-400);
+            transition: color var(--transition-base);
         }
 
-        .password-input .toggle-password:hover {
-            transform: translateY(-50%) scale(1.1);
+        .toggle-password:hover {
+            color: var(--primary-color);
         }
 
-        .password-input .toggle-password:active {
-            transform: translateY(-50%) scale(0.9);
-        }
-
-        /* 密码强度 */
+        /* 密码强度指示器 */
         .password-strength {
             margin-top: 12px;
-            padding: 12px;
-            background: #f8f9fa;
-            border-radius: 8px;
             display: none;
-            animation: fadeIn 0.3s ease;
         }
 
         .password-strength.show {
@@ -177,418 +194,240 @@
         }
 
         .strength-bar {
-            height: 6px;
-            background: #e0e0e0;
-            border-radius: 3px;
+            height: 4px;
+            background: var(--gray-200);
+            border-radius: 2px;
             overflow: hidden;
             margin-bottom: 8px;
         }
 
         .strength-fill {
             height: 100%;
-            background: #ff4d4f;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 0%;
+            width: 0;
+            transition: all var(--transition-base);
+        }
+
+        .strength-fill.weak {
+            width: 33.33%;
+            background: var(--error-color);
         }
 
         .strength-fill.medium {
-            background: #faad14;
+            width: 66.66%;
+            background: var(--warning-color);
         }
 
         .strength-fill.strong {
-            background: #52c41a;
+            width: 100%;
+            background: var(--success-color);
         }
 
         .strength-text {
-            font-size: 13px;
-            color: #666;
-            font-weight: 500;
+            font-size: 12px;
+            color: var(--gray-400);
         }
 
-        /* 忘记密码链接 */
-        .forgot-password {
-            text-align: right;
-            margin-top: 8px;
-        }
-
-        .forgot-password a {
-            font-size: 14px;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .forgot-password a:hover {
-            text-decoration: underline;
-            color: #764ba2;
-        }
-
-        /* 验证码输入框 */
-        .code-input-wrapper {
-            position: relative;
-        }
-
-        .send-code-btn {
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 8px 16px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-        }
-
-        .send-code-btn:hover:not(:disabled) {
-            transform: translateY(-50%) translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-
-        .send-code-btn:active:not(:disabled) {
-            transform: translateY(-50%) translateY(0);
-        }
-
-        .send-code-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: translateY(-50%);
-        }
-
-        .code-input-wrapper input {
-            padding-right: 120px;
-        }
-
-        /* 演示提示 */
-        .demo-hint {
-            font-size: 13px;
-            color: #667eea;
-            margin-top: 12px;
+        /* 首次登录提示 */
+        .first-login-hint {
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 4px solid var(--primary-color);
             padding: 12px 16px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
             border-radius: 8px;
-            border-left: 4px solid #667eea;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--gray-800);
+            display: none;
         }
 
-        .demo-hint::before {
-            content: '💡';
-            font-size: 16px;
+        .first-login-hint.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
         }
 
-        .demo-hint strong {
-            color: #667eea;
-            font-weight: 600;
-        }
-
-        /* 登录按钮 */
-        .btn {
-            padding: 16px 24px;
+        /* 提交按钮 */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-gradient);
+            color: white;
             border: none;
             border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 100%;
-            position: relative;
-            overflow: hidden;
+            transition: all var(--transition-base);
+            margin-top: 8px;
         }
 
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.4s ease, height 0.4s ease;
-        }
-
-        .btn:active::after {
-            width: 200px;
-            height: 200px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-primary:hover {
+        .submit-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .btn-primary:active {
+        .submit-btn:active {
             transform: translateY(0);
         }
 
-        /* 首次登录提示 */
-        .first-login-hint {
+        /* 底部链接 */
+        .auth-footer {
             text-align: center;
-            padding: 16px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-            margin-bottom: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .first-login-hint p {
+            margin-top: 24px;
             font-size: 14px;
-            color: #667eea;
+            color: var(--gray-400);
+        }
+
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
             font-weight: 500;
-            margin: 0;
+            transition: color var(--transition-base);
         }
 
-        .first-login-hint p strong {
-            color: #764ba2;
-        }
-
-        /* 加载遮罩 */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .loading-spinner {
-            width: 56px;
-            height: 56px;
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            color: #fff;
-            font-size: 16px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        /* Toast 提示 */
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-20px);
-            background: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            padding: 14px 24px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 500;
-            z-index: 10000;
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            max-width: 90%;
-            text-align: center;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .toast.error {
-            background: #ff4d4f;
-        }
-
-        .toast.success {
-            background: #52c41a;
+        .auth-footer a:hover {
+            color: var(--secondary-color);
         }
 
         /* 响应式 */
         @media (max-width: 480px) {
-            .container {
-                padding: 16px;
-            }
-
-            .auth-container {
+            .auth-card {
                 padding: 24px;
             }
 
-            .logo {
-                font-size: 32px;
-            }
-
-            .subtitle {
-                font-size: 16px;
+            .auth-logo h1 {
+                font-size: 28px;
             }
 
             .tab-btn {
-                padding: 12px;
+                padding: 10px;
                 font-size: 14px;
             }
 
-            .btn {
-                padding: 14px 20px;
+            .form-input {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+
+            .submit-btn {
+                padding: 14px;
                 font-size: 15px;
-            }
-
-            .code-input-wrapper input {
-                padding-right: 100px;
-            }
-
-            .send-code-btn {
-                padding: 6px 12px;
-                font-size: 13px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 头部 -->
-        <div class="header">
-            <h1 class="logo">🔮 每日推算卡</h1>
-            <p class="subtitle">手机号登录，自动注册</p>
-        </div>
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Logo -->
+            <div class="auth-logo">
+                <h1>✨ 今日能量卡</h1>
+                <p>每日能量，推算人生</p>
+            </div>
 
-        <!-- 登录表单 -->
-        <div class="auth-container">
-            <div class="auth-card">
-                <!-- 登录页签 -->
-                <div class="login-tabs-container">
-                    <div class="login-tabs">
-                        <button class="tab-btn active" data-tab="password">
-                            🔒 密码登录
-                        </button>
-                        <button class="tab-btn" data-tab="code">
-                            🔢 验证码登录
-                        </button>
-                    </div>
-                </div>
+            <!-- 页签切换 -->
+            <div class="login-tabs">
+                <button class="tab-btn active" data-tab="password">密码登录</button>
+                <button class="tab-btn" data-tab="code">验证码登录</button>
+            </div>
 
-                <!-- 首次登录提示 -->
-                <div class="first-login-hint" id="firstLoginHint" style="display: none;">
-                    <p>⚠️ 您是首次登录，请<strong>设置密码</strong>后登录</p>
-                </div>
+            <!-- 首次登录提示 -->
+            <div class="first-login-hint" id="firstLoginHint">
+                🎉 新用户首次登录，请设置您的密码
+            </div>
 
-                <!-- 密码登录表单 -->
-                <div class="login-form active" id="passwordLogin">
-                    <div class="form-group">
-                        <label for="phone">📱 手机号</label>
+            <!-- 密码登录表单 -->
+            <form id="passwordLogin" class="login-form active">
+                <div class="form-group">
+                    <label class="form-label">手机号</label>
+                    <div class="form-input-wrapper">
                         <input
-                            type="tel"
+                            type="text"
                             id="phone"
-                            name="phone"
-                            placeholder="请输入11位手机号"
+                            class="form-input"
+                            placeholder="请输入手机号"
                             maxlength="11"
-                            pattern="[0-9]*"
-                            required>
+                        >
                     </div>
-
-                    <div class="form-group">
-                        <label for="password">🔒 密码</label>
-                        <div class="password-input">
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="请输入登录密码"
-                                required
-                                minlength="6"
-                                maxlength="20">
-                            <button type="button" class="toggle-password" id="togglePassword">👁️</button>
-                        </div>
-                        <div class="password-strength" id="passwordStrength">
-                            <div class="strength-bar">
-                                <div class="strength-fill" id="strengthFill"></div>
-                            </div>
-                            <span class="strength-text" id="strengthText">密码强度</span>
-                        </div>
-                    </div>
-
-                    <div class="forgot-password">
-                        <a href="forgot-password.html">忘记密码？</a>
-                    </div>
-
-                    <button type="button" class="btn btn-primary" id="passwordLoginBtn">
-                        登录
-                    </button>
                 </div>
 
-                <!-- 验证码登录表单 -->
-                <div class="login-form" id="codeLogin">
-                    <div class="form-group">
-                        <label for="codePhone">📱 手机号</label>
-                        <div class="code-input-wrapper">
-                            <input
-                                type="tel"
-                                id="codePhone"
-                                name="codePhone"
-                                placeholder="请输入11位手机号"
-                                maxlength="11"
-                                pattern="[0-9]*"
-                                required>
-                            <button type="button" class="send-code-btn" id="sendCodeBtn">
-                                <span id="sendCodeText">发送验证码</span>
-                            </button>
-                        </div>
+                <div class="form-group">
+                    <label class="form-label">密码</label>
+                    <div class="form-input-wrapper">
+                        <input
+                            type="password"
+                            id="password"
+                            class="form-input"
+                            placeholder="请输入密码"
+                            maxlength="20"
+                        >
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="toggle-password"
+                        >👁️</button>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="code">🔢 验证码</label>
+                <!-- 密码强度指示器 -->
+                <div class="password-strength" id="passwordStrength">
+                    <div class="strength-bar">
+                        <div class="strength-fill" id="strengthFill"></div>
+                    </div>
+                    <div class="strength-text" id="strengthText"></div>
+                </div>
+
+                <button type="button" id="passwordLoginBtn" class="submit-btn">
+                    登录
+                </button>
+            </form>
+
+            <!-- 验证码登录表单 -->
+            <form id="codeLogin" class="login-form">
+                <div class="form-group">
+                    <label class="form-label">手机号</label>
+                    <div class="form-input-wrapper">
+                        <input
+                            type="text"
+                            id="codePhone"
+                            class="form-input"
+                            placeholder="请输入手机号"
+                            maxlength="11"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">验证码</label>
+                    <div class="form-input-wrapper">
                         <input
                             type="text"
                             id="code"
-                            name="code"
+                            class="form-input"
                             placeholder="请输入验证码"
                             maxlength="6"
-                            pattern="[0-9]*"
-                            required>
-                        <p class="demo-hint">演示模式验证码：<strong>1234</strong></p>
+                            style="padding-right: 110px;"
+                        >
+                        <button type="button" id="sendCodeBtn" class="send-code-btn">
+                            <span id="sendCodeText">发送验证码</span>
+                        </button>
                     </div>
-
-                    <button type="button" class="btn btn-primary" id="codeLoginBtn">
-                        登录
-                    </button>
                 </div>
+
+                <button type="button" id="codeLoginBtn" class="submit-btn">
+                    登录
+                </button>
+            </form>
+
+            <!-- 底部链接 -->
+            <div class="auth-footer">
+                <a href="#">忘记密码？</a>
             </div>
         </div>
+    </div>
 
-        <!-- 加载提示 -->
-        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
-            <div class="loading-spinner"></div>
-            <p class="loading-text" id="loadingText">处理中...</p>
-        </div>
-
-        <!-- 底部提示 -->
-        <div class="footer">
-            <p>登录即表示同意 <a href="#">用户协议</a> 和 <a href="#">隐私政策</a></p>
-            <p class="demo-notice">📝 演示模式：验证码为 1234</p>
-        </div>
+    <!-- 加载遮罩 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text" id="loadingText">登录中...</p>
     </div>
 
     <script src="js/login.js"></script>

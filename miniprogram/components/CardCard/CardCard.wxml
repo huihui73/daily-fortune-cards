@@ -1,4 +1,4 @@
-<view class="card" style="border-left: 4px solid {{color}};" bindtap="toggle">
+<view class="card" style="--card-color: {{color}};" bindtap="toggle">
   <view class="card-header">
     <view class="card-title">
       <text wx:if="{{icon}}" class="card-icon">{{icon}}</text>
@@ -11,12 +11,13 @@
 
   <view class="card-content-wrapper" wx:if="{{isExpanded || !expandable}}">
     <view class="card-content">
-      <text class="content-text">{{content}}</text>
+      <slot name="content"></slot>
+      <text class="content-text" wx:if="{{!contentSlot}}">{{content}}</text>
     </view>
 
     <view class="card-actions" wx:if="{{isExpanded}}">
       <button class="action-btn" catchtap="copyContent" size="mini" plain>
-        复制
+        📋 复制
       </button>
     </view>
   </view>

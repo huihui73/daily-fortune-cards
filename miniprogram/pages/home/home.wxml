@@ -112,7 +112,20 @@
         color="{{item.color}}"
         icon="{{item.icon}}"
         bind:toggle="onCardToggle"
-        data-id="{{item.id}}">
+        data-id="{{item.id}}"
+        isOpen="{{item.id === 'c1'}}">
+        <view slot="content" wx:if="{{item.id === 'c3' && fortune}}">
+          <elements-bar elements="{{fortune.elements}}"></elements-bar>
+        </view>
+        <view slot="content" wx:if="{{item.id === 'c4' && item.luckyColorCode}}">
+          <lucky-color 
+            colorCode="{{item.luckyColorCode}}" 
+            colorName="{{item.luckyColorName}}">
+          </lucky-color>
+        </view>
+        <view slot="content" wx:if="{{item.id === 'c7' && item.tasks}}">
+          <task-list tasks="{{item.tasks}}"></task-list>
+        </view>
       </card-card>
     </block>
   </view>

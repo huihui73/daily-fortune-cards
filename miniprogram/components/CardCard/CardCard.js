@@ -1,5 +1,8 @@
-// miniprogram/components/CardCard/CardCard.js
 Component({
+  options: {
+    multipleSlots: true
+  },
+
   properties: {
     title: {
       type: String,
@@ -28,7 +31,8 @@ Component({
   },
 
   data: {
-    isExpanded: false
+    isExpanded: false,
+    contentSlot: false
   },
 
   observers: {
@@ -36,6 +40,13 @@ Component({
       if (isOpen) {
         this.setData({ isExpanded: true });
       }
+    }
+  },
+
+  lifetimes: {
+    attached() {
+      const hasSlot = this.getRelationNodes('.content-slot').length > 0;
+      this.setData({ contentSlot: hasSlot });
     }
   },
 

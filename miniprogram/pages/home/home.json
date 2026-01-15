@@ -1,6 +1,9 @@
 {
   "navigationBarTitleText": "每日推算卡",
   "usingComponents": {
-    "card-card": "/components/CardCard/CardCard"
+    "card-card": "/components/CardCard/CardCard",
+    "elements-bar": "/components/ElementsBar/ElementsBar",
+    "task-list": "/components/TaskList/TaskList",
+    "lucky-color": "/components/LuckyColor/LuckyColor"
   }
 }

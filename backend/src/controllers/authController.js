@@ -1,12 +1,10 @@
 // backend/src/controllers/authController.js
 const User = require('../models/User');
+const db = require('../database/connection');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { generateToken, verifyToken } = require('../config/jwt');
 const { USER_TYPES, USER_STATUS, RESPONSE_MESSAGES, HTTP_STATUS } = require('../config/constants');
-
-// 演示模式：存储用户数据（手机号作为用户名）
-const DEMO_USERS = new Map();
 
 class AuthController {
   // 用户注册/自动注册（手机号+密码）
@@ -78,8 +76,8 @@ class AuthController {
         });
       }
 
-      // 查找用户
-      const existingUser = DEMO_USERS.get(phone);
+      // 查找用户（从数据库）
+      const existingUser = db.prepare('SELECT * FROM users WHERE phone = ?').get(phone);
 
       // 如果用户不存在，需要密码注册
       if (!existingUser) {
@@ -92,27 +90,21 @@ class AuthController {
 
         console.log('用户不存在，自动注册:', phone);
 
-        const username = phone;
+        const passwordHash = await bcrypt.hash(password, 10);
         const phoneMasked = phone.substr(0, 3) + '****' + phone.substr(7);
-        const saltRounds = 10;
-        const passwordHash = await bcrypt.hash(password, saltRounds);
 
-        const userId = DEMO_USERS.size + 1;
+        const insertStmt = db.prepare(`
+          INSERT INTO users (phone, password, nickname, phoneMasked, first_login)
+          VALUES (?, ?, ?, ?, 1)
+        `);
 
-        DEMO_USERS.set(username, {
-          id: userId,
-          username,
-          phone,
-          phoneMasked,
-          passwordHash,
-          gender: null,
-          birthday: null,
-          createdAt: new Date().toISOString()
-        });
+        const result = insertStmt.run(phone, passwordHash, phone, phoneMasked);
+
+        const userId = result.lastInsertRowid;
 
         const token = generateToken({
           userId,
-          username,
+          username: phone,
           userType: USER_TYPES.WEB
         });
 
@@ -144,7 +136,7 @@ class AuthController {
       }
       // 密码登录
       else if (password) {
-        const isValidPassword = await bcrypt.compare(password, existingUser.passwordHash);
+        const isValidPassword = await bcrypt.compare(password, existingUser.password);
 
         if (!isValidPassword) {
           return res.status(HTTP_STATUS.UNAUTHORIZED).json({
@@ -162,7 +154,7 @@ class AuthController {
 
       const token = generateToken({
         userId: existingUser.id,
-        username: existingUser.username,
+        username: existingUser.phone,
         userType: USER_TYPES.WEB
       });
 
@@ -173,7 +165,7 @@ class AuthController {
         message: RESPONSE_MESSAGES.SUCCESS,
         data: {
           userId: existingUser.id,
-          username: existingUser.username,
+          username: existingUser.phone,
           phoneMasked: existingUser.phoneMasked,
           token,
           autoRegistered: false
@@ -201,7 +193,7 @@ class AuthController {
       }
 
       // 检查用户是否已注册
-      const existingUser = DEMO_USERS.get(phone);
+      const existingUser = db.prepare('SELECT * FROM users WHERE phone = ?').get(phone);
       const isRegistered = !!existingUser;
 
       // 演示模式：验证码为 1234
@@ -237,9 +229,9 @@ class AuthController {
 
   // 获取用户信息
   async getProfile(req, res) {
-    const { userId, username } = req.user;
+    const { userId } = req.user;
 
-    const user = DEMO_USERS.get(username);
+    const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
 
     if (!user) {
       return res.status(HTTP_STATUS.NOT_FOUND).json({
@@ -252,12 +244,12 @@ class AuthController {
       success: true,
       data: {
         userId: user.id,
-        username: user.username,
+        username: user.phone,
         phoneMasked: user.phoneMasked,
         phone: user.phone,
         gender: user.gender,
         birthday: user.birthday,
-        createdAt: user.createdAt
+        createdAt: user.created_at
       }
     });
   }
@@ -265,10 +257,10 @@ class AuthController {
   // 更新用户信息
   async updateProfile(req, res) {
     try {
-      const { userId, username } = req.user;
+      const { userId } = req.user;
       const { gender, birthday } = req.body;
 
-      const user = DEMO_USERS.get(username);
+      const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
       if (!user) {
         return res.status(HTTP_STATUS.NOT_FOUND).json({
           success: false,
@@ -276,12 +268,25 @@ class AuthController {
         });
       }
 
-      // 更新用户信息
-      if (gender) user.gender = gender;
-      if (birthday) user.birthday = birthday;
-      user.updatedAt = new Date().toISOString();
+      const updates = [];
+      const params = [];
 
-      DEMO_USERS.set(username, user);
+      if (gender) {
+        updates.push('gender = ?');
+        params.push(gender);
+      }
+      if (birthday) {
+        updates.push('birthday = ?');
+        params.push(birthday);
+      }
+
+      if (updates.length > 0) {
+        updates.push('first_login = 0');
+        params.push(userId);
+
+        const sql = `UPDATE users SET ${updates.join(', ')} WHERE id = ?`;
+        db.prepare(sql).run(...params);
+      }
 
       res.status(HTTP_STATUS.OK).json({
         success: true,
@@ -306,8 +311,8 @@ class AuthController {
 
   // 检查用户资料完整性
   async checkProfileComplete(req, res) {
-    const { userId, username } = req.user;
-    const user = DEMO_USERS.get(username);
+    const { userId } = req.user;
+    const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
 
     if (!user) {
       return res.status(404).json({
@@ -326,7 +331,7 @@ class AuthController {
         hasGender: !!user.gender,
         user: {
           userId: user.id,
-          username: user.username,
+          username: user.phone,
           phoneMasked: user.phoneMasked,
           gender: user.gender,
           birthday: user.birthday
@@ -356,7 +361,7 @@ class AuthController {
       }
 
       // 查找用户
-      const user = DEMO_USERS.get(phone);
+      const user = db.prepare('SELECT * FROM users WHERE phone = ?').get(phone);
 
       if (!user) {
         return res.status(HTTP_STATUS.NOT_FOUND).json({
@@ -366,13 +371,9 @@ class AuthController {
       }
 
       // 更新密码
-      const saltRounds = 10;
-      const passwordHash = await bcrypt.hash(newPassword, saltRounds);
+      const passwordHash = await bcrypt.hash(newPassword, 10);
 
-      user.passwordHash = passwordHash;
-      user.updatedAt = new Date().toISOString();
-
-      DEMO_USERS.set(phone, user);
+      db.prepare('UPDATE users SET password = ? WHERE phone = ?').run(passwordHash, phone);
 
       console.log('用户密码重置成功 - 手机号:', phone);
 
@@ -392,7 +393,7 @@ class AuthController {
   // 修改密码（需要登录）
   async changePassword(req, res) {
     try {
-      const { userId, username } = req.user;
+      const { userId } = req.user;
       const { oldPassword, newPassword } = req.body;
 
       if (!oldPassword || !newPassword) {
@@ -403,7 +404,7 @@ class AuthController {
       }
 
       // 查找用户
-      const user = DEMO_USERS.get(username);
+      const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
 
       if (!user) {
         return res.status(HTTP_STATUS.NOT_FOUND).json({
@@ -413,7 +414,7 @@ class AuthController {
       }
 
       // 验证旧密码
-      const isValidPassword = await bcrypt.compare(oldPassword, user.passwordHash);
+      const isValidPassword = await bcrypt.compare(oldPassword, user.password);
 
       if (!isValidPassword) {
         return res.status(HTTP_STATUS.UNAUTHORIZED).json({
@@ -431,13 +432,9 @@ class AuthController {
       }
 
       // 更新密码
-      const saltRounds = 10;
-      const passwordHash = await bcrypt.hash(newPassword, saltRounds);
+      const passwordHash = await bcrypt.hash(newPassword, 10);
 
-      user.passwordHash = passwordHash;
-      user.updatedAt = new Date().toISOString();
-
-      DEMO_USERS.set(username, user);
+      db.prepare('UPDATE users SET password = ? WHERE id = ?').run(passwordHash, userId);
 
       console.log('用户密码修改成功 - 用户ID:', userId);
 

@@ -1,6 +1,6 @@
-// miniprogram/pages/home/home.js
 const authManager = require('../../utils/authManager.js');
 const fortuneEngine = require('../../utils/fortuneEngine.js');
+const errorHandler = require('../../utils/errorHandler.js');
 
 Page({
   data: {
@@ -10,6 +10,7 @@ Page({
     isPhoneAuthorized: false,
     today: '',
     cards: [],
+    fortune: null,
     isGenerating: false,
     lastGenerateDate: '',
     showLoginGuide: false
@@ -21,7 +22,7 @@ Page({
 
   onShow() {
     this.checkTodayDate();
-    this.checkAuthStatus();
+    this.updateAuthState();
   },
 
   onPullDownRefresh() {
@@ -33,19 +34,10 @@ Page({
     const today = this.getTodayDate();
     this.setData({ today });
 
-    // 初始化认证管理器
-    await authManager.init();
-
-    // 更新认证状态
-    this.updateAuthState();
-
-    // 添加状态监听
-    authManager.addListener(this.updateAuthState);
-
-    // 加载缓存数据
     this.loadCachedData();
-
-    // 检查是否需要重新生成
+    await authManager.init();
+    this.updateAuthState();
+    authManager.addListener(this.updateAuthState);
     this.checkAndRegenerate();
   },
 
@@ -57,18 +49,23 @@ Page({
       isPhoneAuthorized: currentState.isPhoneAuthorized
     });
 
-    // 如果未授权手机号，显示登录引导
-    if (!currentState.isPhoneAuthorized) {
+    const birthday = wx.getStorageSync('birthday');
+    
+    if (!currentState.isPhoneAuthorized && !birthday) {
       this.setData({ showLoginGuide: true });
+    } else if (currentState.isPhoneAuthorized) {
+      this.setData({ showLoginGuide: false });
     }
   },
 
   checkAuthStatus() {
-    // 每次页面显示时检查认证状态
     const state = authManager.getState();
-
-    if (!state.isPhoneAuthorized) {
+    const birthday = wx.getStorageSync('birthday');
+    
+    if (!state.isPhoneAuthorized && !birthday) {
       this.setData({ showLoginGuide: true });
+    } else if (state.isPhoneAuthorized) {
+      this.setData({ showLoginGuide: false });
     }
   },
 
@@ -81,19 +78,30 @@ Page({
   },
 
   loadCachedData() {
-    const birthday = wx.getStorageSync('birthday');
-    const gender = wx.getStorageSync('gender') || 'unspecified';
-    const lastGenerateDate = wx.getStorageSync('lastGenerateDate');
+    try {
+      const birthday = wx.getStorageSync('birthday');
+      const gender = wx.getStorageSync('gender') || 'unspecified';
+      const lastGenerateDate = wx.getStorageSync('lastGenerateDate');
 
-    if (birthday) {
-      this.setData({
+      console.log('加载缓存数据', {
+        hasBirthday: !!birthday,
         birthday,
-        gender
+        gender,
+        lastGenerateDate
       });
-    }
 
-    if (lastGenerateDate) {
-      this.setData({ lastGenerateDate });
+      if (birthday) {
+        this.setData({
+          birthday,
+          gender
+        });
+      }
+
+      if (lastGenerateDate) {
+        this.setData({ lastGenerateDate });
+      }
+    } catch (error) {
+      console.error('加载缓存数据失败', error);
     }
   },
 
@@ -115,10 +123,8 @@ Page({
       if (cachedFortune) {
         this.setData({ cards: cachedFortune });
       } else if (lastGenerateDate !== today) {
-        // New day, auto-generate if we have birthday
         this.generateFortune();
       } else {
-        // Same day, try to load from previous cache
         const lastCacheKey = fortuneEngine.getCacheKey(birthday, lastGenerateDate);
         const lastCachedFortune = wx.getStorageSync(lastCacheKey);
 
@@ -133,8 +139,6 @@ Page({
     const birthday = e.detail.value;
     this.setData({ birthday });
     wx.setStorageSync('birthday', birthday);
-
-    // Clear cached fortune when birthday changes
     this.clearCachedFortune();
   },
 
@@ -157,22 +161,34 @@ Page({
 
     this.setData({ isGenerating: true });
 
-    // Simulate a small delay for better UX
     setTimeout(() => {
       try {
         const fortune = fortuneEngine.generateFortune(birthday, today);
-        const cards = fortuneEngine.buildCards(fortune);
+        let cards = fortuneEngine.buildCards(fortune);
 
-        // Cache result
         const cacheKey = fortuneEngine.getCacheKey(birthday, today);
+        const cachedTasks = wx.getStorageSync(`tasks_${cacheKey}`);
+
+        if (cachedTasks) {
+          cards = cards.map(card => {
+            if (card.id === 'c7' && cachedTasks) {
+              return {
+                ...card,
+                tasks: cachedTasks
+              };
+            }
+            return card;
+          });
+        }
+
         wx.setStorageSync(cacheKey, cards);
         wx.setStorageSync('lastGenerateDate', today);
 
-        // Save to history
         this.saveToHistory(birthday, fortune);
 
         this.setData({
           cards,
+          fortune,
           isGenerating: false,
           lastGenerateDate: today
         });
@@ -182,11 +198,7 @@ Page({
           icon: 'success'
         });
       } catch (error) {
-        console.error('生成推算失败', error);
-        wx.showToast({
-          title: '生成失败，请重试',
-          icon: 'none'
-        });
+        errorHandler.handle(error, { showType: 'toast', customMessage: '生成失败，请重试' });
         this.setData({ isGenerating: false });
       }
     }, 500);
@@ -204,7 +216,6 @@ Page({
 
       history.unshift(historyItem);
 
-      // 保留最近 7 条记录
       if (history.length > 7) {
         history = history.slice(0, 7);
       }
@@ -220,11 +231,10 @@ Page({
     if (birthday) {
       const cacheKey = fortuneEngine.getCacheKey(birthday, today);
       wx.removeStorageSync(cacheKey);
-      this.setData({ cards: [] });
+      this.setData({ cards: [], fortune: null });
     }
   },
 
-  // 获取手机号授权
   onGetPhoneNumber(e) {
     if (e.detail.errMsg !== 'getPhoneNumber:ok') {
       wx.showToast({
@@ -243,13 +253,12 @@ Page({
           icon: 'success'
         });
 
-        // Hide login guide
-        this.setData({ showLoginGuide: false });
-
-        // Generate fortune if we have birthday
-        if (this.data.birthday) {
-          this.generateFortune();
-        }
+        setTimeout(() => {
+          this.updateAuthState();
+          if (this.data.birthday) {
+            this.generateFortune();
+          }
+        }, 300);
       } else {
         wx.showToast({
           title: result.error || '授权失败',
