@@ -1,0 +1,35 @@
+<view class="task-container">
+  <view class="task-header">
+    <text class="task-title">今日微任务</text>
+    <view class="task-progress">
+      <text class="progress-text">{{completedCount}}/{{tasks.length}}</text>
+      <progress 
+        class="progress-bar" 
+        percent="{{progressPercent}}" 
+        stroke-width="6"
+        activeColor="#52c41a"
+        backgroundColor="#f0f0f0"
+        border-radius="10"
+      />
+    </view>
+  </view>
+  
+  <view class="task-list">
+    <view 
+      class="task-item {{task.completed ? 'completed' : ''}}" 
+      wx:for="{{tasks}}" 
+      wx:key="id"
+      bindtap="toggleTask"
+      data-id="{{item.id}}">
+      <view class="task-checkbox">
+        <text class="checkbox-icon">{{item.completed ? '✓' : ''}}</text>
+      </view>
+      <text class="task-text">{{item.text}}</text>
+    </view>
+  </view>
+  
+  <view class="task-congrats" wx:if="{{allCompleted}}">
+    <text class="congrats-icon">🎉</text>
+    <text class="congrats-text">恭喜！今日任务全部完成！</text>
+  </view>
+</view>

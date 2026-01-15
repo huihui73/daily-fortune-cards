@@ -1,0 +1,24 @@
+<view class="lucky-color-container">
+  <view class="color-display">
+    <view 
+      class="color-circle" 
+      style="background: {{colorCode}}; box-shadow: 0 4px 20px {{colorCode}}66;">
+    </view>
+    <view class="color-info">
+      <text class="color-name">{{colorName}}</text>
+      <text class="color-hex">{{colorCode}}</text>
+    </view>
+  </view>
+  
+  <view class="color-meaning">
+    <text class="meaning-title">色彩寓意</text>
+    <text class="meaning-text">{{meaning}}</text>
+  </view>
+  
+  <view class="color-tips" wx:if="{{tips.length > 0}}">
+    <text class="tips-title">今日色彩建议</text>
+    <view class="tips-list">
+      <text class="tip-item" wx:for="{{tips}}" wx:key="*this">• {{item}}</text>
+    </view>
+  </view>
+</view>
